@@ -4,7 +4,7 @@ import "./style.css";
 function Body() {
   return (
     <div className="mainbody">
-      <span className="span1">This is the body</span>
+      <span className="span1">This is the eloof app body</span>
     </div>
   );
 }
