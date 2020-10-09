@@ -1,15 +1,15 @@
-import React from 'react';
-import Header from "./components/Header";
-import Body from "./components/Body";
-import Footer from "./components/Footer";
+import React from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import addGift from "./pages/AddGift";
+import Home from "./pages/Home";
 
 function App() {
   return (
-    <div>
-      <Header />
-      <Body />
-      <Footer />
-    </div>
+    <Router>
+      <div>
+        <Route exact path="/" component={Home} />
+      </div>
+    </Router>
   );
 }
 
