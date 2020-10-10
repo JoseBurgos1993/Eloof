@@ -1,16 +1,9 @@
-import React from "react";
-import Header from "../components/Header";
-import Body from "../components/Body";
-import Footer from "../components/Footer";
+import React from 'react';
 
-const Home = () => {
-  return (
-    <div>
-      <Header />
-      <Body />
-      <Footer />
-    </div>
-  );
+const Home = (props) => {
+  return <div>WE ARE LOGGED IN</div>;
 };
+
+Home.propTypes = {};
 
 export default Home;
