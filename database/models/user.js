@@ -8,7 +8,10 @@ mongoose.promise = Promise;
 const userSchema = new Schema({
   username: { type: String, unique: true, required: true },
   password: { type: String, unique: true, required: true },
+  usertype: { type: String, required: true},
+  wishlist: [String]
 });
+
 
 // Define schema methods
 userSchema.methods = {
