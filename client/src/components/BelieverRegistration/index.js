@@ -13,7 +13,7 @@ class BelieverRegistration extends Component{
     }
 
     render(){
-        const {values: { childName, childAge, childGrade, childLocation, childWishlist} } = this.props;
+        const {values: { childName, childAge, childGrade, childLanguage } } = this.props;
 
         return(
             <div>
@@ -29,16 +29,12 @@ class BelieverRegistration extends Component{
                         <List.Content>Age: {childAge} years old</List.Content>
                     </List.Item>
                     <List.Item>
-                    <List.Icon name='marker' />
-                    <List.Content>Grade: {childGrade}</List.Content>
-                </List.Item>
-                    <List.Item>
-                        <List.Icon name='mail' />
-                        <List.Content>Location: {childLocation}</List.Content>
+                        <List.Icon name='marker' />
+                        <List.Content>Grade: {childGrade}</List.Content>
                     </List.Item>
                     <List.Item>
                         <List.Icon name='marker' />
-                        <List.Content>Wishlist: {childWishlist}</List.Content>
+                        <List.Content>Language: {childLanguage}</List.Content>
                     </List.Item>
                 </List>
 

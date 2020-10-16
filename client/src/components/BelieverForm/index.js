@@ -5,11 +5,8 @@ import BelieverWelcome from '../BelieverWelcome';
 import BelieverName from '../BelieverName';
 import BelieverAge from '../BelieverAge';
 import BelieverGrade from '../BelieverGrade';
-import BelieverLocation from '../BelieverLocation';
-import BelieverWishlist from '../BelieverWishlist';
+import BelieverLanguage from '../BelieverLanguage';
 import BelieverRegistration from '../BelieverRegistration';
-
-
 
 class BelieverForm extends Component {
     state = {
@@ -18,8 +15,7 @@ class BelieverForm extends Component {
         childName: '',
         childAge: '',
         childGrade: '',
-        childLocation: '',
-        childWishlist: []
+        childLanguage: '',
     }
 
     nextStep = () => {
@@ -36,14 +32,18 @@ class BelieverForm extends Component {
         })
     }
 
-    handleChange = input => event => {
-        this.setState({ [input] : event.target.value })
+    handleChange = name => event => {
+        this.setState({ [name] : event.target.value })
+    }
+
+    handleSelectChange = name => (event, data) => {
+        this.setState({ [name] : data.value })
     }
 
     render(){
         const {step} = this.state;
-        const { childName, childAge, childGrade, childLocation, childWishlist } = this.state;
-        const values = { childName, childAge, childGrade, childLocation, childWishlist };
+        const { childName, childAge, childGrade, childLanguage } = this.state;
+        const values = { childName, childAge, childGrade, childLanguage };
         switch(step) {
         case 1:
             return <BelieverWelcome
@@ -62,50 +62,42 @@ class BelieverForm extends Component {
             return <BelieverAge
                     nextStep={this.nextStep}
                     prevStep={this.prevStep}
-                    handleChange = {this.handleChange}
+                    handleChange = {this.handleSelectChange}
                     values={values}
                     />
 
         case 4:
             return <BelieverGrade
-            nextStep={this.nextStep}
-            prevStep={this.prevStep}
-            handleChange = {this.handleChange}
-            values={values}
-            />
+                    nextStep={this.nextStep}
+                    prevStep={this.prevStep}
+                    handleChange = {this.handleSelectChange}
+                    values={values}
+                    />
         
         case 5:
-            return <BelieverLocation
-                nextStep={this.nextStep}
-                prevStep={this.prevStep}
-                handleChange = {this.handleChange}
-                values={values}
-                />
-        
+            return <BelieverLanguage
+                    nextStep={this.nextStep}
+                    prevStep={this.prevStep}
+                    handleChange = {this.handleSelectChange}
+                    values={values}
+                    />
+
+
         case 6:
-            return <BelieverWishlist
-                nextStep={this.nextStep}
-                prevStep={this.prevStep}
-                handleChange = {this.handleChange}
-                values={values}
-                />
+            return <BelieverRegistration
+                    nextStep={this.nextStep}
+                    prevStep={this.prevStep}
+                    handleChange = {this.handleChange}
+                    values={values}
+                    />
 
         case 7:
-            return <BelieverRegistration
-            nextStep={this.nextStep}
-            prevStep={this.prevStep}
-            handleChange = {this.handleChange}
-            values={values}
-            />
-
-        case 8:
             return <BelieverConfirmation
-            nextStep={this.nextStep}
-            prevStep={this.prevStep}
-            handleChange = {this.handleChange}
-            />
-        
-
+                    nextStep={this.nextStep}
+                    prevStep={this.prevStep}
+                    handleChange = {this.handleChange}
+                    />
+                
         default:
             return <BelieverWelcome />
         }    
