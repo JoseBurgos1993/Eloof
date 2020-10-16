@@ -1,10 +1,14 @@
 import axios from 'axios';
 import React, { useEffect } from 'react';
 import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
-import Navbar from './components/navbar';
+//import Navbar from './components/Navbar';
+import Footer from './components/Footer';
+import Header from './components/Header';
 import Home from './pages/home';
 import Login from './pages/login';
-import Signup from './pages/signUp';
+import ElfSignUp from './pages/elfSignUp';
+import SignUp from './pages/signUp';
+import ChildSignUp from './pages/childSignUp';
 import { LOADING, SET_USER, UNSET_USER } from './store/actions';
 import { useStoreContext } from './store/store';
 
@@ -28,8 +32,7 @@ const App = () => {
 
   return (
     <div>
-      <Navbar />
-
+      <Header />
       {state.user ? (
         <Switch>
           <Route exact path="/" component={Home} />
@@ -37,10 +40,13 @@ const App = () => {
       ) : (
         <Switch>
           <Route exact path="/login" component={Login} />
-          <Route exact path="/signup" component={Signup} />
+          <Route exact path="/elfsignup" component={ElfSignUp} />
+          <Route exact path="/childsignup" component={ChildSignUp} />
+          <Route exact path="/signup" component={SignUp} />
           <Redirect to="/login" />
         </Switch>
       )}
+      <Footer />
     </div>
   );
 };

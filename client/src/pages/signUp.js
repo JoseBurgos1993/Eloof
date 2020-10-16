@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import FormContainer from '../components/FormContainer';
 
 const SignUp = () => {
   const history = useHistory();
@@ -23,6 +24,7 @@ const SignUp = () => {
       .post('/api/users', {
         username: signUpCreds.username,
         password: signUpCreds.password,
+        usertype: "believer",
       })
       .then((response) => {
         if (!response.data.error) {
@@ -35,11 +37,16 @@ const SignUp = () => {
         console.log(error);
       });
   };
-
+  
   return (
-    <div className="text-center">
-      <h4>Sign Up</h4>
-      <form className="form-signin">
+    <div style={{marginLeft: "auto", textAlign: "center",marginRight: "auto"}}>
+        <FormContainer content="believer"/>
+        <FormContainer content="elf"/>
+    </div>
+  );
+};
+/*
+<form className="form-signin">
         <label htmlFor="inputEmail" className="sr-only">
           Email address
         </label>
@@ -68,8 +75,5 @@ const SignUp = () => {
           Sign Up
         </button>
       </form>
-    </div>
-  );
-};
-
+*/
 export default SignUp;
