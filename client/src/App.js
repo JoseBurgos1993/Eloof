@@ -4,7 +4,7 @@ import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
 //import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Header from './components/Header';
-import Home from './pages/home';
+import Home from './pages/Home';
 import Login from './pages/login';
 import ElfSignUp from './pages/elfSignUp';
 import SignUp from './pages/signUp';

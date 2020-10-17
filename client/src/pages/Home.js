@@ -5,6 +5,8 @@ import { LOADING, SET_USER, UNSET_USER } from '../store/actions';
 import { useStoreContext } from '../store/store';
 import WishList from "../components/WishList";
 import Item from "../components/Item";
+import { Grid, Image } from 'semantic-ui-react';
+import ListOfBelievers from '../components/ListOfBelievers';
 
 const Home = () => {
   const history = useHistory();
@@ -21,6 +23,7 @@ const Home = () => {
 
     axios.get('/api/users/profile').then((response) => {
       const user = response.data.user;
+      console.log(response.data.user);
       if (response.data.user) {
         setUser({...user});
       } else {
@@ -28,7 +31,7 @@ const Home = () => {
       }
     });
   }, [dispatch, history]);
-
+  
   const handleChange = (event) => {
     const { name, value } = event.target;
     setNewItem({ ...newItem, [name]: value });
@@ -55,35 +58,69 @@ const Home = () => {
         console.log(error);
       });
   };
+  
+  function getUser(){
+    if(user){
+      if(user.usertype === "believer"){
+      return(
+        <div>
+        <form className="form-additem">
+          <label htmlFor="inputitem" className="sr-only"> Add new item </label>
+          <input
+            type="item"
+            id="inputitem"
+            className="form-control"
+            name="name"
+            placeholder="Money"
+            value={newItem.name}
+            onChange={handleChange}
+          />
+          <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={handleSubmit}> Add </button>
+        </form>
+
+        {list ? (
+          <WishList>
+            {list.map(res=>{
+              return(
+                {res}
+              );
+            })}
+          </WishList>
+        ) : (
+          <span>No results</span>
+        )}
+        <Item />
+      </div>
+    );
+    } else if(user.usertype === "elf"){
+      return(
+        <div>
+          <Grid.Column style={{ position: "relative"}}>
+            <Image src={"paper2.png"} />
+            <div style={{position: "absolute",top: 230, left: 130}}>
+              <ListOfBelievers />
+            </div>
+          </Grid.Column>
+        </div>
+      );
+    } else{
+      return(<h1>ERROR LOADING USER</h1>);
+    }
+  } else{
+    return(<div>TEMP</div>)
+  }
+/*
+   
+
+*/
+
+
+    
+};
 
   return(
     <div style={{height: "800px"}}>
-      <form className="form-additem">
-        <label htmlFor="inputitem" className="sr-only"> Add new item </label>
-      <input
-        type="item"
-        id="inputitem"
-        className="form-control"
-        name="name"
-        placeholder="Money"
-        value={newItem.name}
-        onChange={handleChange}
-      />
-      <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={handleSubmit}> Add </button>
-    </form>
-
-      {list ? (
-        <WishList>
-          {list.map(res=>{
-            return(
-              {res}
-            );
-          })}
-        </WishList>
-      ) : (
-        <span>No results</span>
-      )}
-      <Item />
+      {getUser()}
     </div>
   );
 };
