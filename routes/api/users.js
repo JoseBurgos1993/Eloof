@@ -58,16 +58,29 @@ router.post(
     console.log('LOGGED IN', req.user);
     res.send({
       username: req.user.username,
+      usertype: req.user.usertype,
+      wishlist: req.user.wishlist
     });
   }
 );
 
 router.get('/', (req, res) => {
   if (req.user) {
+    console.log("In the api thing, the user is = ", req.user);
     res.json({ user: req.user });
   } else {
     res.json({ user: null });
   }
+});
+
+router.get("/all", (req, res) => {
+  User.find((err, results) => {
+    if (err) {
+      console.log('User Find Error: ', err);
+      return;
+    }
+    res.json(results);
+  });
 });
 
 router.post('/logout', (req, res) => {

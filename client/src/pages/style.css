@@ -1,10 +1,4 @@
-.bodyContainer{
-    height: 850px;
-}
-#cursive{
+h3{
     font-family: 'Dancing Script', cursive;
     font-size: 40px;
-}
-.childname{
-    margin: 30px 0;
 }

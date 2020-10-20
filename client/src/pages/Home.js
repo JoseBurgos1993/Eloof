@@ -3,10 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { LOADING, SET_USER, UNSET_USER } from '../store/actions';
 import { useStoreContext } from '../store/store';
-import WishList from "../components/WishList";
-import Item from "../components/Item";
-import { Grid, Image } from 'semantic-ui-react';
-import ListOfBelievers from '../components/ListOfBelievers';
+import ElfHome from "../components/ElfHome";
+import BelieverHome from "../components/BelieverHome";
 
 const Home = () => {
   const history = useHistory();
@@ -15,7 +13,9 @@ const Home = () => {
   const [newItem, setNewItem] = useState({
     name: ""
   });
-  const [user, setUser] = useState();
+  const [user, setUser] = useState({
+    usertype: ""
+  });
 
   useEffect(() => {
 
@@ -31,7 +31,8 @@ const Home = () => {
       }
     });
   }, [dispatch, history]);
-  
+
+  /*
   const handleChange = (event) => {
     const { name, value } = event.target;
     setNewItem({ ...newItem, [name]: value });
@@ -60,6 +61,7 @@ const Home = () => {
   };
   
   function getUser(){
+    
     if(user){
       if(user.usertype === "believer"){
       return(
@@ -95,12 +97,11 @@ const Home = () => {
     } else if(user.usertype === "elf"){
       return(
         <div>
-          <Grid.Column style={{ position: "relative"}}>
-            <Image src={"paper2.png"} />
-            <div style={{position: "absolute",top: 230, left: 130}}>
+            <Image src={"paper2.png"} style={{marginLeft:"auto", marginRight:"auto"}}/>
+            <div style={{position:"absolute", top: "20%", left: "50%"}}>
               <ListOfBelievers />
             </div>
-          </Grid.Column>
+            
         </div>
       );
     } else{
@@ -109,22 +110,14 @@ const Home = () => {
   } else{
     return(<div>TEMP</div>)
   }
-/*
-   
-
-*/
-
-
-    
 };
+  */
 
   return(
-    <div style={{height: "800px"}}>
-      {getUser()}
+    <div>
+      {user.usertype === "elf" ? <ElfHome props={user} /> : <ElfHome props={user}/> }
     </div>
   );
 };
-
-//Home.propTypes = {};
 
 export default Home;
