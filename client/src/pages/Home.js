@@ -3,8 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { LOADING, SET_USER, UNSET_USER } from '../store/actions';
 import { useStoreContext } from '../store/store';
-import WishList from "../components/WishList";
-import Item from "../components/Item";
+import ElfHome from "../components/ElfHome";
+import BelieverHome from "../components/BelieverHome";
 
 const Home = () => {
   const history = useHistory();
@@ -13,7 +13,9 @@ const Home = () => {
   const [newItem, setNewItem] = useState({
     name: ""
   });
-  const [user, setUser] = useState();
+  const [user, setUser] = useState({
+    usertype: ""
+  });
 
   useEffect(() => {
 
@@ -21,6 +23,7 @@ const Home = () => {
 
     axios.get('/api/users/profile').then((response) => {
       const user = response.data.user;
+      console.log(response.data.user);
       if (response.data.user) {
         setUser({...user});
       } else {
@@ -29,6 +32,7 @@ const Home = () => {
     });
   }, [dispatch, history]);
 
+  /*
   const handleChange = (event) => {
     const { name, value } = event.target;
     setNewItem({ ...newItem, [name]: value });
@@ -55,39 +59,65 @@ const Home = () => {
         console.log(error);
       });
   };
+  
+  function getUser(){
+    
+    if(user){
+      if(user.usertype === "believer"){
+      return(
+        <div>
+        <form className="form-additem">
+          <label htmlFor="inputitem" className="sr-only"> Add new item </label>
+          <input
+            type="item"
+            id="inputitem"
+            className="form-control"
+            name="name"
+            placeholder="Money"
+            value={newItem.name}
+            onChange={handleChange}
+          />
+          <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={handleSubmit}> Add </button>
+        </form>
+
+        {list ? (
+          <WishList>
+            {list.map(res=>{
+              return(
+                {res}
+              );
+            })}
+          </WishList>
+        ) : (
+          <span>No results</span>
+        )}
+        <Item />
+      </div>
+    );
+    } else if(user.usertype === "elf"){
+      return(
+        <div>
+            <Image src={"paper2.png"} style={{marginLeft:"auto", marginRight:"auto"}}/>
+            <div style={{position:"absolute", top: "20%", left: "50%"}}>
+              <ListOfBelievers />
+            </div>
+            
+        </div>
+      );
+    } else{
+      return(<h1>ERROR LOADING USER</h1>);
+    }
+  } else{
+    return(<div>TEMP</div>)
+  }
+};
+  */
 
   return(
-    <div style={{height: "800px"}}>
-      <form className="form-additem">
-        <label htmlFor="inputitem" className="sr-only"> Add new item </label>
-      <input
-        type="item"
-        id="inputitem"
-        className="form-control"
-        name="name"
-        placeholder="Money"
-        value={newItem.name}
-        onChange={handleChange}
-      />
-      <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={handleSubmit}> Add </button>
-    </form>
-
-      {list ? (
-        <WishList>
-          {list.map(res=>{
-            return(
-              {res}
-            );
-          })}
-        </WishList>
-      ) : (
-        <span>No results</span>
-      )}
-      <Item />
+    <div>
+      {user.usertype === "elf" ? <ElfHome props={user} /> : <ElfHome props={user}/> }
     </div>
   );
 };
-
-//Home.propTypes = {};
 
 export default Home;

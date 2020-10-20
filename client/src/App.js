@@ -1,16 +1,18 @@
 import axios from 'axios';
 import React, { useEffect } from 'react';
 import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
-//import Navbar from './components/Navbar';
-import Footer from './components/Footer';
-import Header from './components/Header';
-import Home from './pages/home';
-import Login from './pages/login';
-import ElfSignUp from './pages/elfSignUp';
-import SignUp from './pages/signUp';
-import ChildSignUp from './pages/childSignUp';
+
 import { LOADING, SET_USER, UNSET_USER } from './store/actions';
 import { useStoreContext } from './store/store';
+
+import Homepage from './layouts/Homepage';
+import LoginForm from './layouts/LoginForm';
+import Profile from './layouts/Profile';
+import Wishbook from './layouts/Wishbook';
+
+import Register from './layouts/Register';
+import ElfSignUp from './layouts/ElfSignUp';
+import BelieverSignUp from './layouts/BelieverSignUp';
 
 const App = () => {
   const history = useHistory();
@@ -22,31 +24,34 @@ const App = () => {
     axios.get('/api/users').then((response) => {
       if (response.data.user) {
         dispatch({ type: SET_USER, user: response.data.user });
+        console.log("This is the user", response.data.user);
         history.push('/');
       } else {
         dispatch({ type: UNSET_USER });
-        history.push('/login');
+        //history.push('/login');
       }
     });
   }, [dispatch, history]);
 
   return (
     <div>
-      <Header />
       {state.user ? (
         <Switch>
-          <Route exact path="/" component={Home} />
+          <Route exact path="/" component={Homepage} />
+          <Route exact path="/profile" component={Profile} />
+          <Route exact path="/wishbook" component={Wishbook} />
+          <Redirect to="/" />
         </Switch>
       ) : (
         <Switch>
-          <Route exact path="/login" component={Login} />
+          <Route exact path="/" component={Homepage} />
+          <Route exact path="/login" component={LoginForm} />
+          <Route exact path="/register" component={Register} />
+          <Route exact path="/believersignup" component={BelieverSignUp} />
           <Route exact path="/elfsignup" component={ElfSignUp} />
-          <Route exact path="/childsignup" component={ChildSignUp} />
-          <Route exact path="/signup" component={SignUp} />
-          <Redirect to="/login" />
+          <Redirect to="/" />
         </Switch>
       )}
-      <Footer />
     </div>
   );
 };
