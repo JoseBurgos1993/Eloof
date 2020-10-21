@@ -1,18 +1,18 @@
-import axios from 'axios';
-import React, { useEffect } from 'react';
-import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
+import axios from "axios";
+import React, { useEffect } from "react";
+import { Redirect, Route, Switch, useHistory } from "react-router-dom";
 
-import { LOADING, SET_USER, UNSET_USER } from './store/actions';
-import { useStoreContext } from './store/store';
+import { LOADING, SET_USER, UNSET_USER } from "./store/actions";
+import { useStoreContext } from "./store/store";
 
-import Homepage from './layouts/Homepage';
-import LoginForm from './layouts/LoginForm';
-import Profile from './layouts/Profile';
-import Wishbook from './layouts/Wishbook';
+import Homepage from "./layouts/Homepage";
+import LoginForm from "./layouts/LoginForm";
+import Profile from "./layouts/Profile";
+import Wishbook from "./layouts/Wishbook";
 
-import Register from './layouts/Register';
-import ElfSignUp from './layouts/ElfSignUp';
-import BelieverSignUp from './layouts/BelieverSignUp';
+import Register from "./layouts/Register";
+import ElfSignUp from "./layouts/ElfSignUp";
+import BelieverSignUp from "./layouts/BelieverSignUp";
 
 const App = () => {
   const history = useHistory();
@@ -21,11 +21,11 @@ const App = () => {
   useEffect(() => {
     dispatch({ type: LOADING });
 
-    axios.get('/api/users').then((response) => {
+    axios.get("/api/users").then((response) => {
       if (response.data.user) {
         dispatch({ type: SET_USER, user: response.data.user });
         console.log("This is the user", response.data.user);
-        history.push('/');
+        history.push("/");
       } else {
         dispatch({ type: UNSET_USER });
         //history.push('/login');

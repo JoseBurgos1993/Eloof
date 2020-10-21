@@ -19,4 +19,12 @@ router.post("/", (req, res) => {
     .catch((err) => console.log(err));
 });
 
+router.get("/:id", (req, res) => {
+  Gifts.find({ kidId: req.params.id })
+    .then((gifts) => {
+      res.json(gifts);
+    })
+    .catch((err) => console.log(err));
+});
+
 module.exports = router;
