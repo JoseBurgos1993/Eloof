@@ -1,0 +1,12 @@
+.searchBar {
+  padding: 20px;
+}
+
+.wishlist {
+  padding: 30px;
+  background-color: green;
+}
+
+button {
+  margin-left: 5px;
+}
