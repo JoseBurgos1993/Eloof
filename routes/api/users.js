@@ -74,7 +74,7 @@ router.get('/', (req, res) => {
 });
 
 router.get("/all", (req, res) => {
-  User.find((err, results) => {
+  User.find({}, (err, results) => {
     if (err) {
       console.log('User Find Error: ', err);
       return;
@@ -84,13 +84,18 @@ router.get("/all", (req, res) => {
 });
 
 router.post('/logout', (req, res) => {
-  if (req.user) {
+  //console.log("Pressed logout. Logout = ", req.body)
+  //if (req.user) {
     req.logout();
     res.status(200).json({ msg: 'LOGGED OUT' });
-  } else {
-    res.status(404).json({ msg: 'NO USER TO LOGOUT' });
-  }
+  //} else {
+  //  res.status(404).json({ msg: 'NO USER TO LOGOUT' });
+  //}
 });
+
+//router.post('/finduser', (req,res) => {
+//  User.findOne({username: req.user.username})
+//});
 
 /////////
 

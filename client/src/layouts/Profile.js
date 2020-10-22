@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Card,
   Container,
@@ -25,6 +25,12 @@ const Profile = () => {
   const history = useHistory();
 
   const list=["potato","apple","corn"];
+  const [publicList, setPublicList] = useState([]);
+  const [kidsList, setKidsList] = useState([]);
+  const [pageState, setPageState] = useState("elf");
+  const [search, setSearch] = useState({
+    username: ''
+  });
   console.log("state.user", state.user)
   /*
   useEffect(() => {
@@ -59,17 +65,61 @@ const Profile = () => {
       });
   };
   const handleSubmit = () => {
-    alert("Pressed Submit");
+    setPageState("elf");
+    axios
+      .get("/api/users/all")
+      .then((response) => {
+        setPublicList(response.data.filter(user => user.usertype === 'believer' && user.username === search.username));
+      })
+      .catch((error) => {
+        console.log("submit error: ", error);
+      })
+
   };
   const getPublic = () => {
-    alert("Pressed Public");
+    //alert("Pressed Public");
+    setPageState("elf");
+    axios
+      .get("/api/users/all")
+      .then((response) => {
+        if(response.status === 200) {
+          setPublicList(response.data.filter(user => user.usertype === 'believer'));
+          //setPublicList(response.data);
+          console.log("profile.js success");
+          console.log("response",response);
+        }
+      })
+      .catch((error) => {
+        console.log("profile.js error");
+      });
   };
+  const handleProfile = (index) => {
+    console.log("index = ", index);
+    console.log("publicList[" + index + "] = ", publicList[index]);
+
+    setPageState("kids")
+    setKidsList(...publicList[index].wishlist)
+    console.log("kidslist = ", kidsList);
+  };
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setSearch({ ...search, [name]: value });
+
+  }
+  //{publicList.length > 0 ? (<p>{res.username}</p>) : (<p>Empty</p>)}
+
+
+  /*
+
+
+
+  */
   return(
     <div>
       <Menu fixed='top' inverted>
         <Container>
           <Menu.Item as='a' header>
-            <Image size='mini' src='/logo.png' style={{ marginRight: '1.5em' }} />
+            <Image size='mini' src='/eloof.png' style={{ marginRight: '1.5em' }} />
             eloof
           </Menu.Item>
           <Menu.Item as={ Link } to="/" >Home</Menu.Item>
@@ -96,6 +146,7 @@ const Profile = () => {
         <Header.Content>Happy Holidays {state.user.username}. You're an {state.user.usertype} !</Header.Content>
         </Header>
       </div>
+      
       {state.user.usertype === "elf" ? (
         <div>
           <Grid.Row>
@@ -103,29 +154,36 @@ const Profile = () => {
               <Form>
                 <Form.Field>
                   <label>Child's Name</label>
-                  <input placeholder='Name' />
+                  <input 
+                    placeholder='Name'
+                    onChange={handleChange}
+                    name='username'
+                    value={search.name}
+                  />
                 </Form.Field>
                 <Button onClick={handleSubmit}>Submit</Button>
                 <Button onClick={getPublic}>Or View Public Listings</Button>
               </Form>
-              
             </Grid.Column>
           </Grid.Row>
-          <Card.Group style={{ marginTop: '2em' }} itemsPerRow={3}>
-            {list.map((res,index) => (
-              <h1>{res}, {index}</h1>
-            ))}
-            <Card raised image={src} />
-            <Card raised image={src} />
-            <Card raised image={src} />
-            <Card raised image={src} />
-            <Card raised image={src} />
-            <Card raised image={src} />
-            <Card raised image={src} />
-            <Card raised image={src} />
-            <Card raised image={src} />
-          </Card.Group>
+          {pageState === 'elf' ? (
+              <Card.Group style={{ marginTop: '2em' }} itemsPerRow={3}>
+                {publicList.map((res,index) => (
+                  <Card>
+                    <Image src='https://react.semantic-ui.com/images/avatar/large/matthew.png' wrapped ui={false} />
+                      <Card.Content>
+                        <Card.Description>
+                          {publicList.length > 0 ? (<Button onClick={() => handleProfile(index)}>{res.username}</Button>) : (<p>Empty</p>)}
+                        </Card.Description>
+                      </Card.Content>
+                    </Card>
+                ))}
+              </Card.Group>
+          ) : (
+            <Button onClick={() => setPageState("elf")}>return</Button>
+          )}
         </div>
+          
       ) : (
         <div>
         
