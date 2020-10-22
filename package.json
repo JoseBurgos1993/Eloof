@@ -2,7 +2,7 @@
   "name": "eloof",
   "version": "1.0.0",
   "description": "MERN App",
-  "main": "index.js",
+  "main": "public/index.js",
   "scripts": {
     "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
     "start:prod": "node server.js",
