@@ -25,10 +25,10 @@ const App = () => {
       if (response.data.user) {
         dispatch({ type: SET_USER, user: response.data.user });
         console.log("This is the user", response.data.user);
-        history.push("/");
+        history.push("/profile");
       } else {
         dispatch({ type: UNSET_USER });
-        //history.push('/login');
+        history.push("/");
       }
     });
   }, [dispatch, history]);
