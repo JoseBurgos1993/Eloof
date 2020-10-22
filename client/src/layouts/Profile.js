@@ -28,7 +28,7 @@ const Profile = () => {
   console.log("state.user", state.user);
 
   const [wishList, setToWishList] = useState([]);
-  const [userID, setUserID] = useState("");
+  const [userData, setUserData] = useState([]);
 
   /*
   useEffect(() => {
@@ -72,13 +72,14 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    axios.get("/api/users").then((res) => {
-      if (res.data.user) {
-        setUserID(res.data.user._id);
+    axios.get("/api/users/data").then((res) => {
+      if (state.user) {
+        console.log("setting user data");
+        setUserData(res.data.user);
         axios
           .get("/api/gifts/" + res.data.user._id)
           .then((res) => {
-            console.log("setting wish list items");
+            console.log("setting wish list");
             setToWishList(res.data);
           })
           .catch((err) => {
@@ -89,23 +90,6 @@ const Profile = () => {
       }
     });
   }, []);
-  // useEffect(() => {
-  //   axios.get("/api/users").then((res) => {
-  //     if (state.user) {
-  //       axios
-  //         .get("/api/gifts/" + state.user._id)
-  //         .then((res) => {
-  //           console.log("setting wish list");
-  //           setToWishList(res.data);
-  //         })
-  //         .catch((err) => {
-  //           console.log(err);
-  //         });
-  //     } else {
-  //       console.log("error loading user id");
-  //     }
-  //   });
-  // }, []);
 
   return (
     <div>
@@ -149,8 +133,8 @@ const Profile = () => {
               style={{ marginBottom: "2em" }}
             />
             <Header.Content>
-              Happy Holidays {state.user.childName}. You're an{" "}
-              {state.user.usertype}!
+              Happy Holidays {userData.childName}. You're an {userData.usertype}
+              !
             </Header.Content>
           </Header>
         </div>
@@ -187,9 +171,9 @@ const Profile = () => {
           </div>
         ) : (
           <div>
-            <Grid.Row>Age: {state.user.childName}</Grid.Row>
-            <Grid.Row>Grade: {state.user.childGrade}</Grid.Row>
-            <Grid.Row>Language: {state.user.childLanguage}</Grid.Row>
+            <Grid.Row>Age: {userData.childAge}</Grid.Row>
+            <Grid.Row>Grade: {userData.childGrade}</Grid.Row>
+            <Grid.Row>Language: {userData.childLanguage}</Grid.Row>
             <Grid.Row color="red" style={{ marginTop: "1em" }}>
               <Grid.Column width={4} centered>
                 <p>Naughty</p>

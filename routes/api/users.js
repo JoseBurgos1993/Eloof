@@ -142,4 +142,15 @@ router.post("/additem", (req, res) => {
   );
 });
 
+router.get("/data", (req, res) => {
+  if (req.user) {
+    User.findOne({ username: req.user.username }).then((data) => {
+      console.log("this is the data api call: " + data);
+      res.json({ user: data });
+    });
+  } else {
+    res.json({ user: null });
+  }
+});
+
 module.exports = router;
