@@ -71,6 +71,10 @@ router.post(
       username: req.user.username,
       usertype: req.user.usertype,
       wishlist: req.user.wishlist,
+      childName: req.user.childName,
+      childAge: req.user.childAge,
+      childGrade: req.user.childGrade,
+      childLanguage: req.user.childLanguage,
     });
   }
 );

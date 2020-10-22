@@ -15,7 +15,7 @@ class BelieverRegistration extends Component {
         })
         .then((response) => {
           if (response.status === 200) {
-            window.location.replace("/");
+            window.location.replace("/profile");
           }
         })
         .catch((error) => {
@@ -36,13 +36,12 @@ class BelieverRegistration extends Component {
       })
       .then((response) => {
         if (!response.data.error) {
-          window.location.replace("/");
+          handleLogin();
         } else {
           alert("User ID is already taken!"); //alert user, ID taken
           console.log("USERNAME TAKEN");
         }
       })
-      .then(handleLogin)
       .catch((error) => {
         console.log(error);
       });
