@@ -156,7 +156,7 @@ const Wishbook = () => {
               </Header>
               <Feed>
                 {wishList.map((wishList) => (
-                  <Card>
+                  <Card key={wishList.name}>
                     <Image src={wishList.picture} wrapped ui={false} />
                     <Card.Content>
                       <Card.Header>{wishList.name}</Card.Header>
