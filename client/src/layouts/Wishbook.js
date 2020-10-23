@@ -49,22 +49,22 @@ const Wishbook = () => {
       });
   };
 
-  useEffect(() => {
-    axios.get("/api/users").then((res) => {
-      if (res.data.user) {
-        setUserID(res.data.user._id);
-        axios
-          .get("/api/gifts/" + res.data.user._id)
-          .then((res) => {
-            setToWishList(res.data);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      } else {
-        console.log("error loading user id");
-      }
-    });
+  useEffect(() => {    
+    if (state.user) {
+      setUserID(state.user._id);
+      console.log("state user id: ", state.user._id)
+      axios
+        .get("/api/gifts/" + state.user._id)
+        .then((res) => {
+          console.log(res.data);
+          setToWishList(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      console.log("error loading user id");
+    }
   }, [gift]);
 
   //handleBtnClick searches API for kids searched gift, brings back 10 results for kid to pick from.

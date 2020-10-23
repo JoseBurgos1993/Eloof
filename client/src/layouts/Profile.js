@@ -113,25 +113,29 @@ const Profile = () => {
   //{publicList.length > 0 ? (<p>{res.username}</p>) : (<p>Empty</p>)}
   
   useEffect(() => {
+    setUserData(state.user);
+    axios
+      .get("/api/gifts/" + state.user._id)
+      .then((res) => {
+        console.log("setting wish list");
+        setToWishList(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    /*
     axios.get("/api/users/data").then((res) => {
       if (state.user) {
         console.log("setting user data");
-        setUserData(res.data.user);
-        axios
-          .get("/api/gifts/" + res.data.user._id)
-          .then((res) => {
-            console.log("setting wish list");
-            setToWishList(res.data);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+        
+        
       } else {
         console.log("error loading user id");
       }
     });
   }, []);
-
+  */
+  }, []);
   return (
     <div>
       <Menu fixed="top" inverted>
@@ -173,7 +177,6 @@ const Profile = () => {
         <Header.Content>Happy Holidays {state.user.username}. You're an {state.user.usertype} !</Header.Content>
         </Header>
       </div>
-      
       {state.user.usertype === "elf" ? (
         <div>
           <Grid.Row>
@@ -194,72 +197,22 @@ const Profile = () => {
             </Grid.Column>
           </Grid.Row>
           {pageState === 'elf' ? (
-              <Card.Group style={{ marginTop: '2em' }} itemsPerRow={3}>
-                {publicList.map((res,index) => (
-                  <Card>
-                    <Image src='https://react.semantic-ui.com/images/avatar/large/matthew.png' wrapped ui={false} />
-                      <Card.Content>
-                        <Card.Description>
-                          {publicList.length > 0 ? (<Button onClick={() => handleProfile(index)}>{res.username}</Button>) : (<p>Empty</p>)}
-                        </Card.Description>
-                      </Card.Content>
-                    </Card>
-                ))}
-              </Card.Group>
-          ) : (
-            <Button onClick={() => setPageState("elf")}>return</Button>
-          )}
-        </div>
-          
-      ) : (
-        
-        
-        <div>
-          <Header as="h2" icon textAlign="center">
-            <Image
-              centered
-              circular
-              size="large"
-              src="./christmas.png"
-              style={{ marginBottom: "2em" }}
-            />
-            <Header.Content>
-              Happy Holidays {userData.childName}. You're an {userData.usertype}
-              !
-            </Header.Content>
-          </Header>
-        </div>
-        {state.user.usertype === "elf" ? (
-          <div>
-            <Grid.Row>
-              <Grid.Column width={4} centered>
-                <Form>
-                  <Form.Field>
-                    <label>Child's Name</label>
-                    <input placeholder="Name" />
-                  </Form.Field>
-                  <Button onClick={handleSubmit}>Submit</Button>
-                  <Button onClick={getPublic}>Or View Public Listings</Button>
-                </Form>
-              </Grid.Column>
-            </Grid.Row>
-            <Card.Group style={{ marginTop: "2em" }} itemsPerRow={3}>
-              {list.map((res, index) => (
-                <h1>
-                  {res}, {index}
-                </h1>
+            <Card.Group style={{ marginTop: '2em' }} itemsPerRow={3}>
+              {publicList.map((res,index) => (
+                <Card>
+                  <Image src='https://react.semantic-ui.com/images/avatar/large/matthew.png' wrapped ui={false} />
+                    <Card.Content>
+                      <Card.Description>
+                        {publicList.length > 0 ? (<Button onClick={() => handleProfile(index)}>{res.username}</Button>) : (<p>Empty</p>)}
+                      </Card.Description>
+                    </Card.Content>
+                  </Card>
               ))}
-              <Card raised image={src} />
-              <Card raised image={src} />
-              <Card raised image={src} />
-              <Card raised image={src} />
-              <Card raised image={src} />
-              <Card raised image={src} />
-              <Card raised image={src} />
-              <Card raised image={src} />
-              <Card raised image={src} />
             </Card.Group>
-          </div>
+        ) : (
+          <Button onClick={() => setPageState("elf")}>return</Button>
+        )}
+        </div>
         ) : (
           <div>
             <Grid.Row>Age: {userData.childAge}</Grid.Row>

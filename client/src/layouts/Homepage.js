@@ -1,7 +1,7 @@
-import axios from 'axios';
 import { createMedia } from '@artsy/fresnel'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import FlipCountdown from '../components/Countdown'
 import {
   Button,
   Container,
@@ -16,12 +16,6 @@ import {
   Sidebar,
   Visibility,
 } from 'semantic-ui-react'
-import LogOutButton from '../components/LogOutButton';
-import { Link, useHistory } from 'react-router-dom';
-import { LOADING, UNSET_USER } from '../store/actions';
-import { useStoreContext } from '../store/store';
-//import Countdown from '../components/Countdown'
-
 const { MediaContextProvider, Media } = createMedia({
   breakpoints: {
     mobile: 0,
@@ -34,23 +28,26 @@ const { MediaContextProvider, Media } = createMedia({
  * components for such things.
  */
 const HomepageHeading = ({ mobile }) => (
-  <Container text>
+  <Container>
     {
     <Header as='h2'>
-      <Image size='massive' src='./eloof.png' />
+        <p style={{ marginTop:'1.5em', marginBottom:'2em' }}><Image size='medium' src='./eloof.png' centered/></p>
     </Header>
     }
     <Header
       as='h2'
-      content='Countdown'
       inverted
+      backgroundcolor='limegreen'
       style={{
         fontSize: mobile ? '1.5em' : '1.7em',
         fontWeight: 'normal',
-        marginTop: mobile ? '0.5em' : '1.5em',
+        marginTop: mobile ? '0.5em' : '2em',
       }}
-    />
-    <Button size='huge' color='red' as={ Link } to="/register">
+    > 
+    <p style={{ margin: '1em 1em'}}><i>It's almost Christmas...</i></p>
+      <FlipCountdown />
+    </Header>
+    <Button style={{ marginTop: '3em' }} size='huge' color='red'>
       Register with Santa
       <Icon name='right arrow' />
     </Button>
@@ -64,37 +61,12 @@ HomepageHeading.propTypes = {
  * It can be more complicated, but you can create really flexible markup.
  */
 class DesktopContainer extends Component {
-  state = {};
-  hideFixedMenu = () => this.setState({ fixed: false });
-  showFixedMenu = () => this.setState({ fixed: true });
-
-  handleMenuClick = (route) => {
-
-  };
+  state = {}
+  hideFixedMenu = () => this.setState({ fixed: false })
+  showFixedMenu = () => this.setState({ fixed: true })
   render() {
     const { children } = this.props
     const { fixed } = this.state
-
-    
-    //let [state, dispatch] = useStoreContext();
-    //const history = useHistory();
-
-    const logout = (event) => {
-      event.preventDefault();
-      /*
-      console.log("log out was pressed");
-      dispatch({ type: LOADING });
-      axios
-      .post('/api/users/logout')
-      .then((response) => {
-        if (response.status === 200) {
-          dispatch({ type: UNSET_USER });
-          //history.replace('/login');
-        }
-      }).catch((error) => {
-        console.log('Logout error');
-      })*/
-    };
     return (
       <Media greaterThan='mobile'>
         <Visibility
@@ -104,9 +76,8 @@ class DesktopContainer extends Component {
         >
           <Segment
             inverted
-            color="green"
             textAlign='center'
-            style={{ minHeight: 300, padding: '1em 0em' }}
+            style={{ minHeight: 700, padding: '1em 0em' }}
             vertical
           >
             <Menu
@@ -117,21 +88,23 @@ class DesktopContainer extends Component {
               size='large'
             >
               <Container>
-                <Menu.Item active text='red' as={ Link } to="/" name="Home" />
-                <Menu.Item color='red' as={ Link } to="/Profile" name="Profile" />
-                <Menu.Item color='red' as={ Link } to="/Wishbook" name="Wishbook" />
-                <Menu.Item as='a' as={ Link } to="/FAQ" name="Ask-A-Elf" />
+                <Menu.Item as='a' active>
+                  Home
+                </Menu.Item>
+                <Menu.Item as='a'>Profile</Menu.Item>
+                <Menu.Item as='a'>Wishbook</Menu.Item>
+                <Menu.Item as='a'>Ask-A-Elf</Menu.Item>
                 <Menu.Item position='right'>
-                  <Button color='red' as={ Link } to="/login" inverted={!fixed}>
+                  <Button as='a' inverted={!fixed}>
                     Log in
                   </Button>
-                  <Button color='red' as={ Link } to="/register" inverted={!fixed} primary={fixed} style={{ marginLeft: '0.5em' }}>
+                  <Button as='a' inverted={!fixed} style={{ marginLeft: '0.5em' }}>
                     Sign Up
                   </Button>
                 </Menu.Item>
               </Container>
             </Menu>
-            <HomepageHeading />
+            <HomepageHeading/>
           </Segment>
         </Visibility>
         {children}
@@ -146,30 +119,9 @@ class MobileContainer extends Component {
   state = {}
   handleSidebarHide = () => this.setState({ sidebarOpened: false })
   handleToggle = () => this.setState({ sidebarOpened: true })
-
   render() {
-    //const [state, dispatch] = useStoreContext();
-    //const history = useHistory();
-
     const { children } = this.props
     const { sidebarOpened } = this.state
-    /*
-    const logout = (event) => {
-      event.preventDefault();
-      console.log("log out was pressed");
-      dispatch({ type: LOADING });
-      axios
-      .post('/api/users/logout')
-      .then((response) => {
-        if (response.status === 200) {
-          dispatch({ type: UNSET_USER });
-          //history.replace('/login');
-        }
-      }).catch((error) => {
-        console.log('Logout error');
-      })
-    };
-    */
     return (
       <Media as={Sidebar.Pushable} at='mobile'>
         <Sidebar.Pushable>
@@ -181,15 +133,15 @@ class MobileContainer extends Component {
             vertical
             visible={sidebarOpened}
           >
-            <Menu.Item color='red' as='a' active>
+            <Menu.Item as='a' active>
               Home
             </Menu.Item>
-            <Menu.Item color='red' as={ Link } to="/profile">Profile</Menu.Item>
-            <Menu.Item color='red' as={ Link } to="/wishbook">Wishbook</Menu.Item>
-            <Menu.Item color='red' as={ Link } to="/FAQ">Ask-A-Elf</Menu.Item>
-            <Menu.Item color='red' as={ Link } to="/login">Log in</Menu.Item>
-            <Menu.Item color='red' as={ Link } to="/register">Sign Up</Menu.Item>
-            <Menu.Item color='red' as={ Link } to="/register">Sign Up</Menu.Item>
+            <Menu.Item as='a'>Profile</Menu.Item>
+            <Menu.Item as='a'>Wishbook</Menu.Item>
+            <Menu.Item as='a'>Ask-A-Elf</Menu.Item>
+            <Menu.Item as='a'>Log in</Menu.Item>
+            <Menu.Item as='a'>Sign Up</Menu.Item>
+            <Menu.Item as='a'>Sign Up</Menu.Item>
           </Sidebar>
           <Sidebar.Pusher dimmed={sidebarOpened}>
             <Segment
@@ -199,15 +151,15 @@ class MobileContainer extends Component {
               vertical
             >
               <Container>
-                <Menu inverted pointing secondary size='large'>
+                <Menu inverted pointing size='large'>
                   <Menu.Item onClick={this.handleToggle}>
                     <Icon name='sidebar' />
                   </Menu.Item>
                   <Menu.Item position='right'>
-                    <Button as={ Link } to="/login" inverted>
+                    <Button as='a' inverted>
                       Log in
                     </Button>
-                    <Button as={ Link } to="/register" inverted style={{ marginLeft: '0.5em' }}>
+                    <Button as='a' inverted style={{ marginLeft: '0.5em' }}>
                       Sign Up
                     </Button>
                   </Menu.Item>
@@ -275,7 +227,7 @@ const Homepage = () => (
             <p style={{ fontSize: '1.33em' }}>
             Look through our universal wishbook to send Santa you wishlist!  
             </p>
-          </Grid.Column>
+          </Grid.Column>>
         </Grid.Row>
         <Grid.Row >
           <Grid.Column textAlign='center'>
@@ -288,7 +240,7 @@ const Homepage = () => (
     </Segment>
     <Segment style={{ padding: '2em 0em' }} vertical>
       <Container>
-        <Divider className='header'horizontal style={{ margin: '3em 0em', textTransform: 'uppercase', color: 'red', fontSize:'2em' }}>
+        <Divider as='h4'className='header'horizontal style={{ margin: '3em 0em', textTransform: 'uppercase', color: 'red', fontSize:'2em' }}>
           <h2>Ask-A-Elf</h2>
         </Divider>
         <Grid.Row verticalAlign='middle' columns={4} centered>
@@ -306,7 +258,7 @@ const Homepage = () => (
         <Grid.Row verticalAlign='middle' columns={4} centered>
           <Grid.Column style={{ padding: '2em 0em' }}>
           <Button as='a' color='red' size='large'>
-            Chat with an elf!
+            Ask an elf now!
           </Button>
           </Grid.Column>
         </Grid.Row>
