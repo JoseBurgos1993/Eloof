@@ -8,13 +8,11 @@ import * as serviceWorker from './serviceWorker';
 import { StoreProvider } from './store/store';
 
 ReactDOM.render(
-  <React.StrictMode>
     <Router>
       <StoreProvider>
         <App />
       </StoreProvider>
-    </Router>
-  </React.StrictMode>,
+    </Router>,
   document.getElementById('root')
 );
 

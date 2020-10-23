@@ -20,8 +20,6 @@ import { LOADING, UNSET_USER } from "../store/actions";
 import { useStoreContext } from "../store/store";
 import API from "../utils/API";
 
-const src = "./christmas.png";
-
 const Wishbook = () => {
   const [state, dispatch] = useStoreContext();
   const history = useHistory();
@@ -65,7 +63,7 @@ const Wishbook = () => {
     } else {
       console.log("error loading user id");
     }
-  }, [gift]);
+  }, [state.user, gift]);
 
   //handleBtnClick searches API for kids searched gift, brings back 10 results for kid to pick from.
   const handleBtnClick = () => {

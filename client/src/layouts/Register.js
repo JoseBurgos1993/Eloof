@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
-import { Header,Button, Divider, Form, Grid, Icon,Segment } from 'semantic-ui-react'
+import { Header,Button, Divider, Grid, Icon,Segment } from 'semantic-ui-react'
 
 const Register = () => (
   <Segment placeholder>

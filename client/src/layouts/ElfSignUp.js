@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useStoreContext } from '../store/store';
 import { LOADING, SET_USER } from '../store/actions';
-import { Header,Button, Divider, Form, Grid, Icon,Segment, Image, Message } from 'semantic-ui-react'
+import { Header,Button, Form, Grid, Segment, Image, Message } from 'semantic-ui-react'
 
 const ElfSignUp = () => {
 

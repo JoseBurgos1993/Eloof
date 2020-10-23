@@ -2,6 +2,7 @@ import { createMedia } from '@artsy/fresnel'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import FlipCountdown from '../components/Countdown'
+import { Link } from 'react-router-dom';
 import {
   Button,
   Container,
@@ -88,17 +89,17 @@ class DesktopContainer extends Component {
               size='large'
             >
               <Container>
-                <Menu.Item as='a' active>
+                <Menu.Item as={Link} to="/" active>
                   Home
                 </Menu.Item>
-                <Menu.Item as='a'>Profile</Menu.Item>
-                <Menu.Item as='a'>Wishbook</Menu.Item>
-                <Menu.Item as='a'>Ask-A-Elf</Menu.Item>
+                <Menu.Item as={Link} to="/profile">Profile</Menu.Item>
+                <Menu.Item as={Link} to="/wishbook">Wishbook</Menu.Item>
+                <Menu.Item as={Link} to="/">Ask-A-Elf</Menu.Item>
                 <Menu.Item position='right'>
-                  <Button as='a' inverted={!fixed}>
+                  <Button as={Link} to="/login" inverted={!fixed}>
                     Log in
                   </Button>
-                  <Button as='a' inverted={!fixed} style={{ marginLeft: '0.5em' }}>
+                  <Button as={Link} to="/register" inverted={!fixed} style={{ marginLeft: '0.5em' }}>
                     Sign Up
                   </Button>
                 </Menu.Item>
@@ -227,7 +228,7 @@ const Homepage = () => (
             <p style={{ fontSize: '1.33em' }}>
             Look through our universal wishbook to send Santa you wishlist!  
             </p>
-          </Grid.Column>>
+          </Grid.Column>
         </Grid.Row>
         <Grid.Row >
           <Grid.Column textAlign='center'>

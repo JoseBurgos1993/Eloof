@@ -18,13 +18,10 @@ import { LOADING, UNSET_USER } from "../store/actions";
 import { useStoreContext } from "../store/store";
 //import { listIndexes } from '../../../database/models/user';
 
-const src = "./christmas.png";
-
 const Profile = () => {
   const [state, dispatch] = useStoreContext();
   const history = useHistory();
 
-  const list=["potato","apple","corn"];
   const [publicList, setPublicList] = useState([]);
   const [kidsList, setKidsList] = useState([]);
   const [pageState, setPageState] = useState("elf");
@@ -123,19 +120,7 @@ const Profile = () => {
       .catch((err) => {
         console.log(err);
       });
-    /*
-    axios.get("/api/users/data").then((res) => {
-      if (state.user) {
-        console.log("setting user data");
-        
-        
-      } else {
-        console.log("error loading user id");
-      }
-    });
-  }, []);
-  */
-  }, []);
+  }, [state.user]);
   return (
     <div>
       <Menu fixed="top" inverted>
