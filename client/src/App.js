@@ -49,7 +49,6 @@ const App = () => {
           <Route exact path="/register" component={Register} />
           <Route exact path="/believersignup" component={BelieverSignUp} />
           <Route exact path="/elfsignup" component={ElfSignUp} />
-          <Redirect to="/" />
         </Switch>
       )}
     </div>
