@@ -28,7 +28,7 @@ const App = () => {
         history.push("/profile");
       } else {
         dispatch({ type: UNSET_USER });
-        history.push("/");
+        //history.push("/");
       }
     });
   }, [dispatch, history]);
