@@ -1,6 +1,9 @@
 import { createMedia } from '@artsy/fresnel'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import Landing from './Landing';
+import Footer from './Footer';
+import About from './About';
 import FlipCountdown from '../components/Countdown'
 import { Link } from 'react-router-dom';
 import {
@@ -16,7 +19,18 @@ import {
   Segment,
   Sidebar,
   Visibility,
-} from 'semantic-ui-react'
+} from 'semantic-ui-react';
+
+const Homepage = () => {
+  return(
+    <div>
+      <Landing />
+      <About />
+      <Footer />
+    </div>
+  );
+}
+/*
 const { MediaContextProvider, Media } = createMedia({
   breakpoints: {
     mobile: 0,
@@ -28,6 +42,7 @@ const { MediaContextProvider, Media } = createMedia({
  * HomepageHeading uses inline styling, however it's not the best practice. Use CSS or styled
  * components for such things.
  */
+/*
 const HomepageHeading = ({ mobile }) => (
   <Container>
     {
@@ -61,12 +76,15 @@ HomepageHeading.propTypes = {
  * Neither Semantic UI nor Semantic UI React offer a responsive navbar, however, it can be implemented easily.
  * It can be more complicated, but you can create really flexible markup.
  */
+
+ /*
 class DesktopContainer extends Component {
   state = {}
   hideFixedMenu = () => this.setState({ fixed: false })
   showFixedMenu = () => this.setState({ fixed: true })
   render() {
     const { children } = this.props
+    const { t, i18n } = this.props;
     const { fixed } = this.state
     return (
       <Media greaterThan='mobile'>
@@ -183,6 +201,7 @@ const ResponsiveContainer = ({ children }) => (
    * For large applications it may not be best option to put all page into these containers at
    * they will be rendered twice for SSR.
    */
+  /*
   <MediaContextProvider>
     <DesktopContainer>{children}</DesktopContainer>
     <MobileContainer>{children}</MobileContainer>
@@ -301,4 +320,5 @@ const Homepage = () => (
     </Segment>
   </ResponsiveContainer>
 )
-export default Homepage
+*/
+export default Homepage;
