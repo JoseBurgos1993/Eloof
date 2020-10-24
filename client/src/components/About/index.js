@@ -1,4 +1,3 @@
-import { createMedia } from '@artsy/fresnel'
 import React, { Component } from 'react'
 import {
   Button,
@@ -10,19 +9,11 @@ import {
   Image,
   Segment,
   Visibility,
-} from 'semantic-ui-react'
-const { MediaContextProvider, Media } = createMedia({
-  breakpoints: {
-    mobile: 0,
-    tablet: 768,
-    computer: 1024,
-  },
-})
+} from 'semantic-ui-react';
 
 class DesktopContainer extends Component {
   render() {
     return (
-    <Media greaterThan='mobile'>
     <Visibility
         once={false}
         onBottomPassed={this.showFixedMenu}
@@ -101,18 +92,12 @@ class DesktopContainer extends Component {
       </Container>
      </Segment>
     </Visibility>
-    </Media>
     )
   }
 }
 
-const ResponsiveContainer = ({ children }) => (
-  <MediaContextProvider>
-    <DesktopContainer />
-  </MediaContextProvider>
-)
 const About = () => (
-  <ResponsiveContainer />
+  <DesktopContainer />
 )
 
 export default About

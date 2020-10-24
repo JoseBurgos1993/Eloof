@@ -5,8 +5,7 @@ import axios from "axios";
 class BelieverRegistration extends Component {
   saveAndContinue = (e) => {
     e.preventDefault();
-    /////////////////////////////////////////////////////////////////////////////
-
+    /*
     const handleLogin = () => {
       axios
         .post("/api/users/login", {
@@ -15,6 +14,7 @@ class BelieverRegistration extends Component {
         })
         .then((response) => {
           if (response.status === 200) {
+            dispatch({ type: SET_USER, user: response.data });
             window.location.replace("/profile");
           }
         })
@@ -23,7 +23,7 @@ class BelieverRegistration extends Component {
           console.log(error);
         });
     };
-
+    */
     axios
       .post("/api/users", {
         username: this.props.values.childEmail,
@@ -36,17 +36,17 @@ class BelieverRegistration extends Component {
       })
       .then((response) => {
         if (!response.data.error) {
-          handleLogin();
+          console.log("Account Created");
         } else {
           alert("User ID is already taken!"); //alert user, ID taken
           console.log("USERNAME TAKEN");
+          window.location.replace("/login");
         }
       })
       .catch((error) => {
         console.log(error);
       });
 
-    /////////////////////////////////////////////////////////////////////////////
   };
 
   back = (e) => {

@@ -1,8 +1,5 @@
-import { createMedia } from '@artsy/fresnel'
-import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
-import FlipCountdown from '../components/Countdown'
+import FlipCountdown from '../Countdown'
 import {
   Button,
   Container,
@@ -11,17 +8,12 @@ import {
   Image,
   Menu,
   Segment,
-  Sidebar,
-  Visibility,
 } from 'semantic-ui-react'
-const { MediaContextProvider, Media } = createMedia({
-  breakpoints: {
-    mobile: 0,
-    tablet: 768,
-    computer: 1024,
-  },
-})
-
+import { Link } from "react-router-dom";
+/* Heads up!
+ * HomepageHeading uses inline styling, however it's not the best practice. Use CSS or styled
+ * components for such things.
+ */
 const HomepageHeading = ({ mobile }) => (
   <Container text>
     {
@@ -43,30 +35,19 @@ const HomepageHeading = ({ mobile }) => (
     <p style={{ margin: '1em 1em'}}><i>It's almost Christmas...</i></p>
     <FlipCountdown />
     </Header>
-    <Button size='huge' color='red'>
+    <Button size='huge' color='red' as={ Link } to='/register'>
       Register with Santa Now!
       <Icon name='right arrow' />
     </Button>
   </Container>
 )
-HomepageHeading.propTypes = {
-  mobile: PropTypes.bool,
-}
-
+/* Heads up!
+ * Neither Semantic UI nor Semantic UI React offer a responsive navbar, however, it can be implemented easily.
+ * It can be more complicated, but you can create really flexible markup.
+ */
 class DesktopContainer extends Component {
-  state = {}
-  hideFixedMenu = () => this.setState({ fixed: false })
-  showFixedMenu = () => this.setState({ fixed: true })
   render() {
-    const { children } = this.props
-    const { fixed } = this.state
     return (
-      <Media greaterThan='mobile'>
-        <Visibility
-          once={false}
-          onBottomPassed={this.showFixedMenu}
-          onBottomPassedReverse={this.hideFixedMenu}
-        >
           <Segment
             inverted
             textAlign='center'
@@ -74,10 +55,9 @@ class DesktopContainer extends Component {
             vertical
           >
             <Menu
-              fixed={fixed ? 'top' : null}
-              inverted={!fixed}
-              pointing={!fixed}
-              secondary={!fixed}
+              inverted
+              pointing
+              secondary
               size='large'
             >
               <Container>
@@ -88,10 +68,10 @@ class DesktopContainer extends Component {
                 <Menu.Item color='red' as={ Link } to='/wishbook'>Wishbook</Menu.Item>
                 <Menu.Item as={ Link } to='/'>Ask-A-Elf</Menu.Item>
                 <Menu.Item position='right'>
-                    <Button as={ Link } to='/login' inverted={!fixed}>
+                    <Button as={ Link } to='/login' inverted>
                         Log in
                     </Button>
-                    <Button as={ Link } to='/register' inverted={!fixed} style={{ marginLeft: '0.5em' }}>
+                    <Button as={ Link } to='/register' inverted style={{ marginLeft: '0.5em' }}>
                         Sign Up
                     </Button>
                 </Menu.Item>
@@ -99,26 +79,10 @@ class DesktopContainer extends Component {
             </Menu>
             <HomepageHeading />
           </Segment>
-        </Visibility>
-        {children}
-      </Media>
     )
   }
 }
-DesktopContainer.propTypes = {
-  children: PropTypes.node,
-}
-const ResponsiveContainer = ({ children }) => (
-  
-  <MediaContextProvider>
-    <DesktopContainer>{children}</DesktopContainer>
-  </MediaContextProvider>
-)
-ResponsiveContainer.propTypes = {
-  children: PropTypes.node,
-}
 const Landing = () => (
-  <ResponsiveContainer/>
+  <DesktopContainer/>
 )
-
 export default Landing

@@ -25,7 +25,7 @@ const App = () => {
       if (response.data.user) {
         dispatch({ type: SET_USER, user: response.data.user });
         console.log("This is the user", response.data.user);
-        history.push("/profile");
+        //history.push("/profile");
       } else {
         dispatch({ type: UNSET_USER });
         //history.push("/");
@@ -49,6 +49,7 @@ const App = () => {
           <Route exact path="/register" component={Register} />
           <Route exact path="/believersignup" component={BelieverSignUp} />
           <Route exact path="/elfsignup" component={ElfSignUp} />
+          <Redirect to="/" />
         </Switch>
       )}
     </div>
