@@ -11,6 +11,7 @@ import {
   Segment,
   Visibility,
 } from 'semantic-ui-react'
+/*
 const { MediaContextProvider, Media } = createMedia({
   breakpoints: {
     mobile: 0,
@@ -18,10 +19,7 @@ const { MediaContextProvider, Media } = createMedia({
     computer: 1024,
   },
 })
-/* Heads up!
- * Neither Semantic UI nor Semantic UI React offer a responsive navbar, however, it can be implemented easily.
- * It can be more complicated, but you can create really flexible markup.
- */
+
 class DesktopContainer extends Component {
   render() {
     return (
@@ -189,10 +187,6 @@ class MobileContainer extends Component {
   }
 }
 const ResponsiveContainer = ({ children }) => (
-  /* Heads up!
-   * For large applications it may not be best option to put all page into these containers at
-   * they will be rendered twice for SSR.
-   */
   <MediaContextProvider>
     <DesktopContainer />
     <MobileContainer />
@@ -201,4 +195,8 @@ const ResponsiveContainer = ({ children }) => (
 const About = () => (
   <ResponsiveContainer />
 )
+*/
+const About = () => (
+  <div>aboutpage</div>
+);
 export default About
