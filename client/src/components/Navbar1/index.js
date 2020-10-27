@@ -6,7 +6,7 @@ function Navbar() {
   return (
     <nav className="navbar navbar-expand-lg">
       <Link className="navbar-brand" to="/">
-        <img className="navLogo" src={"./images/logo.png"} />
+        <img className="navLogo" src={"./eloof.png"} />
       </Link>
       <div>
         <ul className="navbar-nav">
