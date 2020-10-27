@@ -9,6 +9,7 @@ import {
   Image,
   List,
   Menu,
+  Icon,
   Segment,
   Button,
   Form,
@@ -16,41 +17,21 @@ import {
 import { Link, useHistory } from "react-router-dom";
 import { LOADING, UNSET_USER } from "../store/actions";
 import { useStoreContext } from "../store/store";
+import Navigation from '../components/Navigation';
+import Footer from '../components/Footer';
 //import { listIndexes } from '../../../database/models/user';
 
 const Profile = () => {
   const [state, dispatch] = useStoreContext();
   const history = useHistory();
-
-  const [publicList, setPublicList] = useState([]);
-  const [kidsList, setKidsList] = useState([]);
-  const [pageState, setPageState] = useState("elf");
   const [search, setSearch] = useState({
-    username: ''
+    username: "",
   });
   const [wishList, setToWishList] = useState([]);
   const [userData, setUserData] = useState([]);
-
-  /*
-  useEffect(() => {
-    dispatch({ type: LOADING });
-
-    axios.get('/api/users').then((response) => {
-      if (response.data.user) {
-        dispatch({ type: SET_USER, user: response.data.user });
-        history.push('/');
-      } else {
-        dispatch({ type: UNSET_USER });
-        //history.push('/login');
-      }
-    });
-  }, [dispatch, history]);
-  */
   const logout = (event) => {
     event.preventDefault();
-
     dispatch({ type: LOADING });
-
     axios
       .post("/api/users/logout")
       .then((response) => {
@@ -63,52 +44,118 @@ const Profile = () => {
         console.log("Logout error");
       });
   };
-
-  const handleSubmit = () => {
-    setPageState("elf");
-    axios
-      .get("/api/users/all")
-      .then((response) => {
-        setPublicList(response.data.filter(user => user.usertype === 'believer' && user.username === search.username));
-      })
-      .catch((error) => {
-        console.log("submit error: ", error);
-      })
-
-  };
-
-  const getPublic = () => {
-    //alert("Pressed Public");
-    setPageState("elf");
-    axios
-      .get("/api/users/all")
-      .then((response) => {
-        if(response.status === 200) {
-          setPublicList(response.data.filter(user => user.usertype === 'believer'));
-          //setPublicList(response.data);
-          console.log("profile.js success");
-          console.log("response",response);
-        }
-      })
-      .catch((error) => {
-        console.log("profile.js error");
-      });
-  };
-  const handleProfile = (index) => {
-    console.log("index = ", index);
-    console.log("publicList[" + index + "] = ", publicList[index]);
-
-    setPageState("kids")
-    setKidsList(...publicList[index].wishlist)
-    console.log("kidslist = ", kidsList);
-  };
   const handleChange = (event) => {
     const { name, value } = event.target;
     setSearch({ ...search, [name]: value });
-
+  };
+  function handleSubmit(event) {
+    // event.preventDefault();
+    console.log("searching kids wishlist");
+    setToWishList([]);
+    axios
+      .get("/api/gifts/" + search.username + "/true")
+      .then((res) => {
+        console.log("setting wish list with kid id");
+        setToWishList(res.data);
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
-  //{publicList.length > 0 ? (<p>{res.username}</p>) : (<p>Empty</p>)}
+  function getPublic(event) {
+    // event.preventDefault();
+    console.log("getting public list");
+    setToWishList([]);
+    axios
+      .get("/api/gifts/")
+      .then((res) => {
+        console.log("setting wish list");
+        setToWishList(res.data);
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+  const handlePurchaseClick = (event) => {
+    // event.preventDefault();
+    let index = event.target.value;
+    console.log("purchased item for kid at index :" + event.target.value);
+    console.log("kid ID: " + wishList[event.target.value].kidId);
+    console.log("item ID :" + wishList[event.target.value]._id);
+    axios
+      .post(
+        "/api/gifts/" +
+          wishList[event.target.value].kidId +
+          "/" +
+          wishList[event.target.value]._id
+      )
+      .then((res) => {
+        console.log("purchased item for kid!");
+        if (search.username === wishList[index].kidId) {
+          handleSubmit();
+        } else {
+          getPublic();
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  useEffect(() => {
+    setUserData(state.user);
+    console.log(search.username);
+    axios
+      .get("/api/gifts/" + state.user._id)
+      .then((res) => {
+        console.log("setting wish list");
+        setToWishList(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+  /*
+  const [state, dispatch] = useStoreContext();
+  const history = useHistory();
+
+  const [search, setSearch] = useState({
+    username: ''
+  });
+  const [wishList, setToWishList] = useState([]);
+  const [userData, setUserData] = useState([]);
+
   
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log("searching kids wishlist");
+    setToWishList([]);
+  };
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setSearch({ ...search, [name]: value });
+  };
+  const getPublic = (event) => {
+    event.preventDefault();
+    console.log("getting public list");
+    setToWishList([]);
+    axios
+      .get("/api/gifts/")
+      .then((res) => {
+        console.log("setting wish list");
+        setToWishList(res.data);
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const handlePurchaseClick = (event) => {
+    event.preventDefault();
+    console.log("purchased item for kid at index :" + event.target.value);
+  };
   useEffect(() => {
     setUserData(state.user);
     axios
@@ -121,96 +168,132 @@ const Profile = () => {
         console.log(err);
       });
   }, [state.user]);
+  */
   return (
     <div>
-      <Menu fixed="top" inverted>
-        <Container>
-          <Menu.Item as='a' header>
-            <Image size='mini' src='/eloof.png' style={{ marginRight: '1.5em' }} />
-            eloof
-          </Menu.Item>
-          <Menu.Item as={Link} to="/">
-            Home
-          </Menu.Item>
-          <Menu.Item as={Link} to="/profile">
-            Profile
-          </Menu.Item>
-          <Menu.Item as={Link} to="/wishbook">
-            WishBook
-          </Menu.Item>
-          <Menu.Item as={Link} to="/FAQ">
-            Ask-A-Elf
-          </Menu.Item>
-          <Menu.Item position="right">
-            <Button color="red" onClick={logout}>
-              Log Out
-            </Button>
-          </Menu.Item>
-        </Container>
-      </Menu>
+      <Navigation />
     
-      
+
       {state.user.usertype === "elf" ? (
-      <Container text style={{ marginTop: '7em' }}>
-      <div>
-        <Header as='h2' icon textAlign='center'>
-        <Image
-          centered
-          circular
-          size='large'
-          src='./christmas.png'
-          style={{ marginBottom: '2em'}}
-        />
-        <Header.Content>Happy Holidays {state.user.username}. You're an {state.user.usertype} !</Header.Content>
-        </Header>
-      </div>
         <div>
-          <Grid.Row>
-            <Grid.Column width={4} centered>
-              <Form>
-                <Form.Field>
-                  <label>Child's Name</label>
-                  <input 
-                    placeholder='Name'
-                    onChange={handleChange}
-                    name='username'
-                    value={search.name}
-                  />
-                </Form.Field>
-                <Button onClick={handleSubmit}>Submit</Button>
-                <Button onClick={getPublic}>Or View Public Listings</Button>
-              </Form>
-            </Grid.Column>
-          </Grid.Row>
-          {pageState === 'elf' ? (
-            <Card.Group style={{ marginTop: '2em' }} itemsPerRow={3}>
-              {publicList.map((res,index) => (
-                <Card>
-                  <Image src='https://react.semantic-ui.com/images/avatar/large/matthew.png' wrapped ui={false} />
-                    <Card.Content>
-                      <Card.Description>
-                        {publicList.length > 0 ? (<Button onClick={() => handleProfile(index)}>{res.username}</Button>) : (<p>Empty</p>)}
-                      </Card.Description>
-                    </Card.Content>
-                  </Card>
-              ))}
-            </Card.Group>
-        ) : (
-          <Button onClick={() => setPageState("elf")}>return</Button>
-        )}
-        </div>
-      </Container>
-        ) : (
+          <Grid centered>
           <div>
-            <Grid.Row>Age: {userData.childAge}</Grid.Row>
-            <Grid.Row>Grade: {userData.childGrade}</Grid.Row>
-            <Grid.Row>Language: {userData.childLanguage}</Grid.Row>
-            <Grid.Row color="red" style={{ marginTop: "1em" }}>
-              <Grid.Column width={4} centered>
-                <p>Naughty</p>
-              </Grid.Column>
+            <Header as="h2" icon textAlign="center">
+              <Image
+                centered
+                circular
+                size="large"
+                src="./christmas.png"
+                style={{ marginBottom: "2em" }}
+              />
+              <Header.Content>
+                Happy Holidays {state.user.username}. You're an{" "}
+                {state.user.usertype} !
+              </Header.Content>
+            </Header>
+          </div>
+        
+        <Grid.Row>
+          <Grid.Column width={4} centered>
+            <Form>
+              <Form.Field>
+                <label>Child's ID</label>
+                <input
+                  placeholder="Child's ID..."
+                  onChange={handleChange}
+                  name="username"
+                  value={search.name}
+                />
+              </Form.Field>
+              <Button onClick={handleSubmit}>Submit</Button>
+              <Button onClick={getPublic}>Or View Public Listings</Button>
+            </Form>
+          </Grid.Column>
+        </Grid.Row>
+        </Grid> 
+        <Grid celled>
+        <Card.Group style={{ marginTop: "2em" }} itemsPerRow={3}>
+          {wishList.map((wishList, index) => (
+            <Card key={index}>
+              {wishList.purchased === false ? (
+                <div>
+                  <Image src={wishList.picture} wrapped ui={false} />
+                  <Card.Content>
+                    <Card.Header as="h2">{wishList.name}</Card.Header>
+                    {wishList.discription}
+                    <br></br>
+                    <br></br>Price: ${wishList.price}
+                    <br></br>
+                    Link:{" "}
+                    <a href={wishList.url} target="_blank">
+                      {wishList.url}
+                    </a>
+                    <br></br>
+                    <br></br>
+                      <Button
+                        value={index}
+                        onClick={handlePurchaseClick}
+                        color="red"
+                      >
+                        <Icon name="plus cart" size="large" /> Purchase Gift for
+                        Kid
+                    </Button>
+                  </Card.Content>
+                </div>
+                ) : (
+                  <div>
+                    <Image src={wishList.picture} style={{ tintColor: 'gray', opacity: 0.5 }} wrapped ui={false} />
+                    <Card.Content>
+                      <Card.Header as="h2">{wishList.name}</Card.Header>
+                      {wishList.discription}
+                      <br></br>
+                      <br></br>Price: ${wishList.price}
+                      <br></br>
+                      Link:{" "}
+                      <a href={wishList.url} target="_blank">
+                        {wishList.url}
+                      </a>
+                      <br></br>
+                      <br></br>
+                      <Button color="green">
+                        <Icon name="check" size="large" />
+                        Already Purchased
+                      </Button>
+                    </Card.Content>
+                  </div>
+                )}
+            </Card>
+          ))}
+        </Card.Group>
+      </Grid>
+      </div>
+      ) : (
+        <div>
+          <Grid columns={3} widths='equal'>
+            <Grid.Row>
+              <Header as="h2" icon textAlign="center">
+                <Image
+                  centered
+                  circular
+                  size="large"
+                  src="./christmas.png"
+                  style={{ marginBottom: "2em" }}
+                />
+                <Header.Content>
+                  Happy Holidays {state.user.username}. You're a{" "}
+                  {state.user.usertype} !
+                </Header.Content>
+              </Header>
             </Grid.Row>
-            <Container textAlign="center">
+            <Grid.Row textAlign='center' style={{ marginTop: '1em', marginBottom: '2em'}}>
+              <Grid.Column> {userData.childAge} years old </Grid.Column> 
+              <Grid.Column>
+                |       {userData.childLocation}       | </Grid.Column> 
+              <Grid.Column> Status: Naughty </Grid.Column>
+            </Grid.Row>
+          </Grid>
+          <Container textAlign="center">
+            <Segment vertical style={{ minHeight: 500, padding: '1em 0em' }}>
               <Card.Header as="h2">My Wish List</Card.Header>
               <Card.Group style={{ marginTop: "2em" }} itemsPerRow={3}>
                 {wishList.map((wishList) => (
@@ -222,68 +305,16 @@ const Profile = () => {
                   </Card>
                 ))}
               </Card.Group>
-            </Container>
-          </div>
-        )}
+            </Segment>
+          </Container>
+        </div>
+      )}
       <Segment
         inverted
         vertical
         style={{ margin: "5em 0em 0em", padding: "5em 0em" }}
       >
-        <Container textAlign="center">
-          <Grid divided inverted stackable>
-            <Grid.Column width={3}>
-              <Header inverted as="h4" content="Group 1" />
-              <List link inverted>
-                <List.Item as="a">Link One</List.Item>
-                <List.Item as="a">Link Two</List.Item>
-                <List.Item as="a">Link Three</List.Item>
-                <List.Item as="a">Link Four</List.Item>
-              </List>
-            </Grid.Column>
-            <Grid.Column width={3}>
-              <Header inverted as="h4" content="Group 2" />
-              <List link inverted>
-                <List.Item as="a">Link One</List.Item>
-                <List.Item as="a">Link Two</List.Item>
-                <List.Item as="a">Link Three</List.Item>
-                <List.Item as="a">Link Four</List.Item>
-              </List>
-            </Grid.Column>
-            <Grid.Column width={3}>
-              <Header inverted as="h4" content="Group 3" />
-              <List link inverted>
-                <List.Item as="a">Link One</List.Item>
-                <List.Item as="a">Link Two</List.Item>
-                <List.Item as="a">Link Three</List.Item>
-                <List.Item as="a">Link Four</List.Item>
-              </List>
-            </Grid.Column>
-            <Grid.Column width={7}>
-              <Header inverted as="h4" content="Footer Header" />
-              <p>
-                Extra space for a call to action inside the footer that could
-                help re-engage users.
-              </p>
-            </Grid.Column>
-          </Grid>
-          <Divider inverted section />
-          <Image centered size="mini" src="/logo.png" />
-          <List horizontal inverted divided link size="small">
-            <List.Item as="a" href="#">
-              Site Map
-            </List.Item>
-            <List.Item as="a" href="#">
-              Contact Us
-            </List.Item>
-            <List.Item as="a" href="#">
-              Terms and Conditions
-            </List.Item>
-            <List.Item as="a" href="#">
-              Privacy Policy
-            </List.Item>
-          </List>
-        </Container>
+        <Footer />
       </Segment>
     </div>
   );

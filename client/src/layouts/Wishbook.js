@@ -1,5 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
+import Navigation from '../components/Navigation'
+import Footer from '../components/Footer'
 import {
   Card,
   Container,
@@ -107,35 +109,7 @@ const Wishbook = () => {
 
   return (
     <div>
-      <Menu fixed="top" inverted>
-        <Container>
-          <Menu.Item as="a" header>
-            <Image
-              size="mini"
-              src="/eloof.png"
-              style={{ marginRight: "1.5em" }}
-            />
-            eloof
-          </Menu.Item>
-          <Menu.Item as={Link} to="/">
-            Home
-          </Menu.Item>
-          <Menu.Item as={Link} to="/profile">
-            Profile
-          </Menu.Item>
-          <Menu.Item as={Link} to="/wishbook">
-            WishBook
-          </Menu.Item>
-          <Menu.Item as={Link} to="/FAQ">
-            Ask-A-Elf
-          </Menu.Item>
-          <Menu.Item position="right">
-            <Button color="red" onClick={logout}>
-              Log Out
-            </Button>
-          </Menu.Item>
-        </Container>
-      </Menu>
+      <Navigation />
       {/*/////////////////////////////////////////////code starts here////////////////////////////////*/}
       <Container text style={{ marginTop: "3em" }}>
         <div>
@@ -210,66 +184,16 @@ const Wishbook = () => {
           </Grid.Row>
         </Grid>
       </Container>
+      
       <Segment
         inverted
         vertical
         style={{ margin: "5em 0em 0em", padding: "5em 0em" }}
       >
-        <Container textAlign="center">
-          <Grid divided inverted stackable>
-            <Grid.Column width={3}>
-              <Header inverted as="h4" content="Group 1" />
-              <List link inverted>
-                <List.Item as="a">Link One</List.Item>
-                <List.Item as="a">Link Two</List.Item>
-                <List.Item as="a">Link Three</List.Item>
-                <List.Item as="a">Link Four</List.Item>
-              </List>
-            </Grid.Column>
-            <Grid.Column width={3}>
-              <Header inverted as="h4" content="Group 2" />
-              <List link inverted>
-                <List.Item as="a">Link One</List.Item>
-                <List.Item as="a">Link Two</List.Item>
-                <List.Item as="a">Link Three</List.Item>
-                <List.Item as="a">Link Four</List.Item>
-              </List>
-            </Grid.Column>
-            <Grid.Column width={3}>
-              <Header inverted as="h4" content="Group 3" />
-              <List link inverted>
-                <List.Item as="a">Link One</List.Item>
-                <List.Item as="a">Link Two</List.Item>
-                <List.Item as="a">Link Three</List.Item>
-                <List.Item as="a">Link Four</List.Item>
-              </List>
-            </Grid.Column>
-            <Grid.Column width={7}>
-              <Header inverted as="h4" content="Footer Header" />
-              <p>
-                Extra space for a call to action inside the footer that could
-                help re-engage users.
-              </p>
-            </Grid.Column>
-          </Grid>
-          <Divider inverted section />
-          <Image centered size="mini" src="/eloof.png" />
-          <List horizontal inverted divided link size="small">
-            <List.Item as="a" href="#">
-              Site Map
-            </List.Item>
-            <List.Item as="a" href="#">
-              Contact Us
-            </List.Item>
-            <List.Item as="a" href="#">
-              Terms and Conditions
-            </List.Item>
-            <List.Item as="a" href="#">
-              Privacy Policy
-            </List.Item>
-          </List>
-        </Container>
+        
+
       </Segment>
+      <Footer />
     </div>
   );
 };

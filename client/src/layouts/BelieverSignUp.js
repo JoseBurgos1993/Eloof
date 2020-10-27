@@ -1,13 +1,18 @@
 import React from "react";
-import {
-  Header,
-  Grid,
-  Image,
-} from "semantic-ui-react";
-import BelieverForm from "../components/BelieverForm";
+import Navigation from '../components/Navigation';
+import Footer from '../components/Footer';
+import FormBackground from "../components/Form/FormBackground";
 
 const BelieverSignUp = () => {
-
+  
+  return(
+    <div>
+      <Navigation />
+      <FormBackground />
+      <Footer />
+    </div>
+  );
+  /*
   return (
     <Grid textAlign="center" style={{ height: "100vh" }} verticalAlign="middle">
       <Grid.Column style={{ maxWidth: 450 }}>
@@ -18,6 +23,7 @@ const BelieverSignUp = () => {
       </Grid.Column>
     </Grid>
   );
+  */
 };
 
 export default BelieverSignUp;
