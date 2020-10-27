@@ -1,5 +1,5 @@
 import axios from "axios";
-
+const apikey = process.env.REACT_APP_API_KEY;
 export default {
   getProduct: function (item) {
     return axios({
@@ -10,7 +10,7 @@ export default {
         "content-type": "application/octet-stream",
         "x-rapidapi-host":
           "target-com-store-product-reviews-locations-data.p.rapidapi.com",
-        "x-rapidapi-key": process.env.REACT_APP_API_KEY,
+        "x-rapidapi-key": apikey,
         useQueryString: true,
       },
       params: {
