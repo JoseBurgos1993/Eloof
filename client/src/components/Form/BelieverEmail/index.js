@@ -11,7 +11,7 @@ class BelieverEmail extends Component {
     const { values } = this.props;
     return (
       <Form>
-        <h1 className="ui centered">What is your email and password?</h1>
+        <h1 className="ui centered">What is your parent's email and password?</h1>
         <Form.Field>
           <label></label>
           <input

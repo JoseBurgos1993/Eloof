@@ -1,15 +1,17 @@
-import React, { Component } from 'react'
+import React from 'react'
 import FlipCountdown from '../Countdown'
 import {
   Button,
   Container,
   Header,
-  Icon,
   Image,
   Menu,
   Segment,
 } from 'semantic-ui-react'
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { LOADING, UNSET_USER } from "../../store/actions";
+import { useStoreContext } from "../../store/store";
+import axios from "axios";
 /* Heads up!
  * HomepageHeading uses inline styling, however it's not the best practice. Use CSS or styled
  * components for such things.
@@ -37,52 +39,59 @@ const HomepageHeading = ({ mobile }) => (
     </Header>
     <Button size='huge' color='red' as={ Link } to='/register'>
       Register with Santa Now!
-      <Icon name='right arrow' />
     </Button>
   </Container>
-)
-/* Heads up!
- * Neither Semantic UI nor Semantic UI React offer a responsive navbar, however, it can be implemented easily.
- * It can be more complicated, but you can create really flexible markup.
- */
-class DesktopContainer extends Component {
-  render() {
-    return (
-          <Segment
-            inverted
-            textAlign='center'
-            style={{ minHeight: 700, padding: '1em 0em' }}
-            vertical
-          >
-            <Menu
-              inverted
-              pointing
-              secondary
-              size='large'
-            >
-              <Container>
-                <Menu.Item text='red' as={ Link } to='/' active>
-                  Home
-                </Menu.Item>
-                <Menu.Item color='red' as={ Link } to='/profile' >Profile</Menu.Item>
-                <Menu.Item color='red' as={ Link } to='/wishbook'>Wishbook</Menu.Item>
-                <Menu.Item as={ Link } to='/'>Ask-A-Elf</Menu.Item>
-                <Menu.Item position='right'>
-                    <Button as={ Link } to='/login' inverted>
-                        Log in
-                    </Button>
-                    <Button as={ Link } to='/register' inverted style={{ marginLeft: '0.5em' }}>
-                        Sign Up
-                    </Button>
-                </Menu.Item>
-              </Container>
-            </Menu>
-            <HomepageHeading />
-          </Segment>
-    )
-  }
+);
+
+const Landing = () => {
+  const [state, dispatch] = useStoreContext();
+  const history = useHistory();
+
+  const logout = (event) => {
+    event.preventDefault();
+
+    dispatch({ type: LOADING });
+
+    axios
+      .post("/api/users/logout")
+      .then((response) => {
+        if (response.status === 200) {
+          dispatch({ type: UNSET_USER });
+          history.replace("/");
+        }
+      })
+      .catch((error) => {
+        console.log("Logout error");
+      });
+  };
+  return (
+    <div>
+      <Segment inverted textAlign='center' style={{ minHeight: 700, padding: '1em 0em' }} vertical >
+        <Menu inverted pointing secondary size='large' >
+          {state.user ? (
+            <Container>
+              <Menu.Item as={ Link } active to='/' > Home </Menu.Item>
+              <Menu.Item as={ Link } to='/profile' > Profile </Menu.Item>
+              <Menu.Item as={ Link } to='/wishbook' >Wishbook</Menu.Item>
+              <Menu.Item as={ Link } to='/' >Ask-A-Elf</Menu.Item>
+              <Menu.Item position='right'>
+                <Button onClick={logout} > Log Out </Button>
+              </Menu.Item>
+            </Container>
+          ) : (
+            <Container>
+              <Menu.Item as={ Link } active to='/' > Home </Menu.Item>
+              <Menu.Item as={ Link } to='/' >Ask-A-Elf</Menu.Item>
+              <Menu.Item position='right'>
+                <Button as={ Link } to='/login' inverted> Log In </Button>
+                <Button as={ Link } to='/register' inverted style={{ marginLeft: '0.5em' }}> Sign Up </Button>
+              </Menu.Item>
+            </Container>
+          )}
+        </Menu>
+        <HomepageHeading />
+      </Segment>
+    </div>
+  );
 }
-const Landing = () => (
-  <DesktopContainer/>
-)
 export default Landing

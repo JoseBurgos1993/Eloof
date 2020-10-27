@@ -12,7 +12,7 @@ const userSchema = new Schema({
   wishlist: [String],
   childName: { type: String },
   childAge: { type: String },
-  childGrade: { type: String },
+  childLocation: { type: String },
   childLanguage: { type: String },
 });
 
