@@ -75,7 +75,7 @@ const Landing = () => {
               <Menu.Item as={ Link } to='/wishbook' >Wishbook</Menu.Item>
               <Menu.Item as={ Link } to='/' >Ask-A-Elf</Menu.Item>
               <Menu.Item position='right'>
-                <Button onClick={logout} > Log Out </Button>
+                <Button onClick={logout} inverted> Log Out </Button>
               </Menu.Item>
             </Container>
           ) : (
