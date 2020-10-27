@@ -149,6 +149,8 @@ const Profile = () => {
         </Container>
       </Menu>
     
+      
+      {state.user.usertype === "elf" ? (
       <Container text style={{ marginTop: '7em' }}>
       <div>
         <Header as='h2' icon textAlign='center'>
@@ -162,7 +164,6 @@ const Profile = () => {
         <Header.Content>Happy Holidays {state.user.username}. You're an {state.user.usertype} !</Header.Content>
         </Header>
       </div>
-      {state.user.usertype === "elf" ? (
         <div>
           <Grid.Row>
             <Grid.Column width={4} centered>
@@ -198,6 +199,7 @@ const Profile = () => {
           <Button onClick={() => setPageState("elf")}>return</Button>
         )}
         </div>
+      </Container>
         ) : (
           <div>
             <Grid.Row>Age: {userData.childAge}</Grid.Row>
@@ -223,7 +225,6 @@ const Profile = () => {
             </Container>
           </div>
         )}
-      </Container>
       <Segment
         inverted
         vertical
