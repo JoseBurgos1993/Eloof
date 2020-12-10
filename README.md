@@ -37,6 +37,8 @@ Click the Logout link to logout of the app and be returned to the landing page.
 To log back in, simply enter the information on the login form you provided during signup to access your account again.
 Note: Please note at current that the application uses Target's API for the Wishbook for demonstration purposes. You will need to create your own account with Target to use the Wishbook portion of the application.
 
+![eloof](https://user-images.githubusercontent.com/57579330/101791172-395e7680-3ad1-11eb-9494-27610219e34d.gif)
+
 # Contributions
 Your contribution is most welcome! Please refer to the contributing guidelines when making contributions to this project.
 Please note that this project is released with a Contributor Code of Conduct. By participating in this project, you agree to abide by its terms.
