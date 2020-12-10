@@ -68,7 +68,7 @@ class BelieverRegistration extends Component {
         </Grid>
         <br></br>
         <p>Please write down the email, password, and user ID below! This gives you access to your personal wishlist!</p>
-        <p> Email: {childEmail} ~~ Password: {childPassword} ~~ User ID: {}</p>
+        <p> Email: {childEmail} and Password: {childPassword}</p>
         <Button onClick={this.back}>Back</Button>
         <Button onClick={this.saveAndContinue}>Confirm</Button>
       </div>
