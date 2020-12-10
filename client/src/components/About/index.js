@@ -67,7 +67,7 @@ class DesktopContainer extends Component {
     </Segment>
     <Segment style={{ padding: '2em 0em' }} vertical>
       <Container>
-        <Divider as='h4'className='header'horizontal style={{ margin: '3em 0em', textTransform: 'uppercase', color: 'red', fontSize:'2em' }}>
+        <Divider as='h4' id="ask" className='header'horizontal style={{ margin: '3em 0em', textTransform: 'uppercase', color: 'red', fontSize:'2em' }}>
           <h2>Ask-A-Elf</h2>
         </Divider>
         <Grid.Row verticalAlign='middle' columns={4} centered>

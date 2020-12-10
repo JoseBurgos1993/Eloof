@@ -13,7 +13,7 @@ router.post("/", (req, res) => {
     wishlist,
     childName,
     childAge,
-    childGrade,
+    childLocation,
     childLanguage,
   } = req.body;
 
@@ -44,7 +44,7 @@ router.post("/", (req, res) => {
         wishlist: wishlist,
         childName: childName,
         childAge: childAge,
-        childGrade: childGrade,
+        childLocation: childLocation,
         childLanguage: childLanguage,
       });
     } else {
@@ -74,7 +74,7 @@ router.post(
       wishlist: req.user.wishlist,
       childName: req.user.childName,
       childAge: req.user.childAge,
-      childGrade: req.user.childGrade,
+      childLocation: req.user.childLocation,
       childLanguage: req.user.childLanguage,
     });
   }

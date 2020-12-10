@@ -13,7 +13,7 @@ class BelieverRegistration extends Component {
         usertype: "believer",
         childName: this.props.values.childName,
         childAge: this.props.values.childAge,
-        childGrade: this.props.values.childGrade,
+        childLocation: this.props.values.childLocation,
         childLanguage: this.props.values.childLanguage,
       })
       .then((response) => {
@@ -38,7 +38,7 @@ class BelieverRegistration extends Component {
 
   render() {
     const {
-      values: { childName, childPassword, childAge, childGrade, childLanguage, childEmail, childLocation, santaNote },
+      values: { childName, childPassword, childAge, childLanguage, childEmail, childLocation, santaNote },
     } = this.props;
 
     return (

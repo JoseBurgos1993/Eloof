@@ -40,7 +40,7 @@ const Navigation = () => {
           <Menu.Item as={ Link } to='/' > Home </Menu.Item>
           <Menu.Item as={ Link } to='/profile' > Profile </Menu.Item>
           <Menu.Item as={ Link } to='/wishbook' >Wishbook</Menu.Item>
-          <Menu.Item as={ Link } to='/' >Ask-A-Elf</Menu.Item>
+          <Menu.Item as={ Link } to="#ask" >Ask-A-Elf</Menu.Item>
           <Menu.Item position='right'>
             <Button onClick={logout} > Log Out </Button>
           </Menu.Item>

@@ -15,7 +15,7 @@ export default {
       },
       params: {
         sponsored: "1",
-        limit: "10",
+        limit: "9",
         offset: "0",
         store_id: "3991",
         keyword: item,

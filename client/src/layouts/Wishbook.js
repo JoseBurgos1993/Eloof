@@ -138,7 +138,7 @@ const Wishbook = () => {
               </Feed>
             </Grid.Column>
             <Grid.Column width={13} textAlign="center">
-              <Container centered>
+              <Container centered style={{ marginBottom:  '3em', }}>
                 <Input placeholder="Search..." onChange={handleInputChange} />
                 <Button icon="search" onClick={handleBtnClick} />
               </Container>
@@ -146,13 +146,15 @@ const Wishbook = () => {
                 <div>
                   <Card
                     raised
-                    image={
-                      "https://images.pexels.com/photos/1303084/pexels-photo-1303084.jpeg"
-                    }
+                    //image={
+                    //  "https://images.pexels.com/photos/1303084/pexels-photo-1303084.jpeg"
+                    //}
                     fluid
                   />
-                  <Header as="h2" icon textAlign="center">
-                    <Header.Content>Search Gifts</Header.Content>
+                  <Header as="h2" icon textAlign="center"  >
+                    <Header.Content>
+                      No Results
+                    </Header.Content>
                   </Header>
                 </div>
               )}

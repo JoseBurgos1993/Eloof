@@ -187,8 +187,7 @@ const Profile = () => {
                 style={{ marginBottom: "2em" }}
               />
               <Header.Content>
-                Happy Holidays {state.user.username}. You're an{" "}
-                {state.user.usertype} !
+                Happy Holidays!
               </Header.Content>
             </Header>
           </div>
@@ -220,9 +219,9 @@ const Profile = () => {
                   <Image src={wishList.picture} wrapped ui={false} />
                   <Card.Content>
                     <Card.Header as="h2">{wishList.name}</Card.Header>
-                    {wishList.discription}
+                    {wishList.discription.substring(0,280)}...
                     <br></br>
-                    <br></br>Price: ${wishList.price}
+                    <br></br><span style={{fontWeight: 'bold'}}>Price:</span> ${wishList.price}
                     <br></br>
                     Link:{" "}
                     <a href={wishList.url} target="_blank">
@@ -269,7 +268,7 @@ const Profile = () => {
       </div>
       ) : (
         <div>
-          <Grid columns={3} widths='equal'>
+          <Grid widths='equal'>
             <Grid.Row>
               <Header as="h2" icon textAlign="center">
                 <Image
@@ -280,16 +279,14 @@ const Profile = () => {
                   style={{ marginBottom: "2em" }}
                 />
                 <Header.Content>
-                  Happy Holidays {state.user.username}. You're a{" "}
-                  {state.user.usertype} !
+                  Happy Holidays {state.user.childName}. You're a{" "}
+                  {state.user.usertype}!
                 </Header.Content>
               </Header>
             </Grid.Row>
             <Grid.Row textAlign='center' style={{ marginTop: '1em', marginBottom: '2em'}}>
-              <Grid.Column> {userData.childAge} years old </Grid.Column> 
-              <Grid.Column>
-                |       {userData.childLocation}       | </Grid.Column> 
-              <Grid.Column> Status: Naughty </Grid.Column>
+              {userData.childAge} years old ~*~
+              {userData.childLocation}
             </Grid.Row>
           </Grid>
           <Container textAlign="center">

@@ -73,7 +73,7 @@ const Landing = () => {
               <Menu.Item as={ Link } active to='/' > Home </Menu.Item>
               <Menu.Item as={ Link } to='/profile' > Profile </Menu.Item>
               <Menu.Item as={ Link } to='/wishbook' >Wishbook</Menu.Item>
-              <Menu.Item as={ Link } to='/' >Ask-A-Elf</Menu.Item>
+              <Menu.Item as={ Link } to="/" >Ask-A-Elf</Menu.Item>
               <Menu.Item position='right'>
                 <Button onClick={logout} inverted> Log Out </Button>
               </Menu.Item>
@@ -81,7 +81,7 @@ const Landing = () => {
           ) : (
             <Container>
               <Menu.Item as={ Link } active to='/' > Home </Menu.Item>
-              <Menu.Item as={ Link } to='/' >Ask-A-Elf</Menu.Item>
+              <Menu.Item href='#ask' >Ask-A-Elf</Menu.Item>
               <Menu.Item position='right'>
                 <Button as={ Link } to='/login' inverted> Log In </Button>
                 <Button as={ Link } to='/register' inverted style={{ marginLeft: '0.5em' }}> Sign Up </Button>
