@@ -219,7 +219,7 @@ const Profile = () => {
                   <Image src={wishList.picture} wrapped ui={false} />
                   <Card.Content>
                     <Card.Header as="h2">{wishList.name}</Card.Header>
-                    {wishList.discription.substring(0,280)}...
+                    {wishList.discription ? (<span>{wishList.discription.substring(0,280)}...</span>) : (<span>No description available.</span>)}
                     <br></br>
                     <br></br><span style={{fontWeight: 'bold'}}>Price:</span> ${wishList.price}
                     <br></br>
@@ -235,7 +235,7 @@ const Profile = () => {
                         color="red"
                       >
                         <Icon name="plus cart" size="large" /> Purchase Gift for
-                        Kid
+                        Child
                     </Button>
                   </Card.Content>
                 </div>
@@ -244,7 +244,8 @@ const Profile = () => {
                     <Image src={wishList.picture} style={{ tintColor: 'gray', opacity: 0.5 }} wrapped ui={false} />
                     <Card.Content>
                       <Card.Header as="h2">{wishList.name}</Card.Header>
-                      {wishList.discription}
+                      <Card.Header as="h2">{wishList.name}</Card.Header>
+                      {wishList.discription ? (<span>{wishList.discription.substring(0,280)}...</span>) : (<span>No description available.</span>)}
                       <br></br>
                       <br></br>Price: ${wishList.price}
                       <br></br>
