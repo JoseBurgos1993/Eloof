@@ -219,7 +219,23 @@ const Profile = () => {
                   <Image src={wishList.picture} wrapped ui={false} />
                   <Card.Content>
                     <Card.Header as="h2">{wishList.name}</Card.Header>
-                    {wishList.discription ? (<span>{wishList.discription.substring(0,280)}...</span>) : (<span>No description available.</span>)}
+                    {wishList.discription ? (
+                      <span>
+                        {wishList.discription.length > 280 ? (
+                          <span>
+                            {wishList.discription.substring(0,280)}...
+                          </span>
+                        ) : (
+                          <span>
+                            {wishList.discription}
+                          </span>
+                        )}
+                      </span>
+                    ) : (
+                      <span>
+                        No description available.
+                      </span>
+                    )}
                     <br></br>
                     <br></br><span style={{fontWeight: 'bold'}}>Price:</span> ${wishList.price}
                     <br></br>
@@ -245,7 +261,23 @@ const Profile = () => {
                     <Card.Content>
                       <Card.Header as="h2">{wishList.name}</Card.Header>
                       <Card.Header as="h2">{wishList.name}</Card.Header>
-                      {wishList.discription ? (<span>{wishList.discription.substring(0,280)}...</span>) : (<span>No description available.</span>)}
+                      {wishList.discription ? (
+                      <span>
+                        {wishList.discription.length > 280 ? (
+                          <span>
+                            {wishList.discription.substring(0,280)}...
+                          </span>
+                        ) : (
+                          <span>
+                            {wishList.discription}
+                          </span>
+                        )}
+                      </span>
+                    ) : (
+                      <span>
+                        No description available.
+                      </span>
+                    )}
                       <br></br>
                       <br></br>Price: ${wishList.price}
                       <br></br>
@@ -269,7 +301,7 @@ const Profile = () => {
       </div>
       ) : (
         <div>
-          <Grid widths='equal'>
+          <Grid centered columns='2' widths='equal'>
             <Grid.Row>
               <Header as="h2" icon textAlign="center">
                 <Image
@@ -285,9 +317,13 @@ const Profile = () => {
                 </Header.Content>
               </Header>
             </Grid.Row>
-            <Grid.Row textAlign='center' style={{ marginTop: '1em', marginBottom: '2em'}}>
-              {userData.childAge} years old ~*~
-              {userData.childLocation}
+            <Grid.Row style={{ marginTop: '1em', marginBottom: '2em'}}>
+              <Grid.Column textAlign='center'>
+                {userData.childAge} years old
+              </Grid.Column>
+              <Grid.Column textAlign='center'>
+                {userData.childLocation}
+              </Grid.Column>
             </Grid.Row>
           </Grid>
           <Container textAlign="center">
