@@ -1,5 +1,8 @@
 # eloof: Universal Children's Holiday Wishbook Application
 
+# Summary
+This app is a Christmas gift registry. Children and adults create accounts. The children can choose items to add to their Christmas wishlist. Adults can view the items that children pick and click on them to indicate that that user will purchase the item for the child. Gift registeries, including holiday-themed ones, already exist. But the difference is that Eloof is built specifically to be child-friendly. The entire time a child uses the app, we uphold the idea that this list is being sent to Santa Claus. Prices and other information like that are not shown to child. When an adult uses the site, the curtain is lifted and parents can see prices and that the items are from Target.com.
+
 # Installation 
 This is a a React application deployed via Heroku and uses Semantic UI, Mongo, and Axios. Please uses the following installation commands before running the application:
 ### npm install
@@ -25,6 +28,9 @@ and run npm i in the cloned repository's root directory to install the node modu
 3. Start the server by running the application as before using:
 ### npm start 
 If everything worked correctly, you should be able to see the landing page when navigating to localhost:3000.
+
+#Structure
+Since this is a React app, it follows the standard React organization style. A public folder that holds assets, and a src folder that contains pages and components. Since this is also a MERN app with Passport, the React portion is put in a client folder while the rest handles database management.
 
 # Usage
 To use the app, navigate [here](https://eloof.herokuapp.com/)! 
